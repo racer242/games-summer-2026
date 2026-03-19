@@ -1,0 +1,120 @@
+.primary-button,
+.secondary-button {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 28px;
+  gap: 10px;
+
+  color: #5d279e;
+  background: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 6px 6px 0px #000000;
+  border-radius: 8px;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.primary-button:hover {
+  background: #ff49b8;
+}
+
+.primary-button:active {
+  color: #fff;
+  background: #ff49b8;
+}
+
+.primary-button:disabled {
+  color: #ddd;
+  background: #eee;
+  cursor: default;
+}
+
+.secondary-button {
+  color: #fff;
+  background: #5d279e;
+}
+
+.secondary-button:hover {
+  background: #fff;
+  color: #8200cc;
+}
+.secondary-button:active {
+  background: #fff;
+  color: #ff49b8;
+}
+
+.secondary-button:disabled {
+  color: #ddd;
+  background: #eee;
+  cursor: default;
+}
+
+.primary-button.small,
+.secondary-button.small {
+  padding: 18px 25px !important;
+}
+
+.primary-button.inverted {
+  background: #ff49b8;
+  color: #fff !important;
+}
+
+.button-large {
+  padding: 16px 28px;
+}
+
+.mobile .button-large {
+  padding: 16px 20px;
+}
+
+.button-mobile-adaptive {
+}
+
+.mobile .button-mobile-adaptive {
+  width: 100%;
+}
+
+.button-group {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.mobile .button-group {
+  width: auto;
+  flex-direction: column;
+  flex-direction: column-reverse;
+  gap: 14px;
+}
+
+.g-checkbox {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+
+  cursor: pointer;
+}

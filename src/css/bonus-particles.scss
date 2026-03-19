@@ -1,0 +1,54 @@
+$d: 2px;
+$s: 300px;
+
+.bonus-particle-container {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.bonus-particle {
+  position: absolute;
+  pointer-events: none;
+  width: $d;
+  height: $d;
+  animation: shoot 1s ease-out;
+  animation-name: shoot, fade;
+  background: #fff;
+
+  @for $i from 0 to 50 {
+    $t: (1 + 0.01 * random(100)) * 1s;
+    $sizeAdd: random(5) * 1px; // random(11) → 0..10 → итого 10..20px
+    $finalSize: $d + $sizeAdd;
+    $o: 0.1 * (3 + random(7));
+
+    &:nth-child(#{$i + 1}) {
+      width: $finalSize;
+      height: $finalSize;
+      --op: #{$o};
+      border-radius: $finalSize;
+      transform: translate(random($s) * 1px - $s/2, random($s) * 1px - $s/2);
+      animation-duration: $t;
+      animation-delay: 0.001 * random(100) * $t;
+      animation-fill-mode: both;
+      opacity: $o;
+    }
+  }
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(0, 0);
+  }
+}
+@keyframes fade {
+  0% {
+    opacity: var(--op);
+  }
+  80% {
+    opacity: var(--op);
+  }
+  100% {
+    opacity: 0;
+  }
+}

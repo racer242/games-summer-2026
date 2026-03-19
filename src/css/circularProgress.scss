@@ -1,0 +1,37 @@
+$progress-bar-stroke-background-width: 4.5;
+$progress-bar-stroke-progress-width: 5;
+$progress-bar-size: 72px;
+
+.circularProgress {
+  height: $progress-bar-size;
+  transform: rotate(-90deg);
+  width: $progress-bar-size;
+}
+
+.progress-bar__background {
+  fill: none;
+  stroke: #e2eff0;
+  stroke-width: $progress-bar-stroke-background-width;
+}
+
+.progress-bar__progress {
+  fill: none;
+  stroke: #78bec7;
+  stroke-dasharray: 100 100;
+  stroke-dashoffset: 100;
+  stroke-width: $progress-bar-stroke-progress-width;
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.progress-bar__value {
+  position: absolute;
+  left: 50%;
+  top: 49%;
+  transform: translate(-50%, -50%);
+  font-family: "Dela Gothic One";
+  font-optical-sizing: auto;
+  text-align: center;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 24px;
+}
