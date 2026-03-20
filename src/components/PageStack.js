@@ -6,7 +6,7 @@ import Game2Page from "../content/Game2Page";
 import Game3Page from "../content/Game3Page";
 import Game4Page from "../content/Game4Page";
 import Main1Page from "../content/Main1Page";
-import Finish1Page from "../content/Finish1Page";
+import FinishPage from "../content/FinishPage";
 import Main2Page from "../content/Main2Page";
 import Main3Page from "../content/Main3Page";
 import Main4Page from "../content/Main4Page";
@@ -79,7 +79,7 @@ class PageStack extends Component {
               <Game4Page bounds={this.props.bounds} store={this.store} />
             )))}
         {this.state.currentPage === "finish" && (
-          <Finish1Page bounds={this.props.bounds} store={this.store} />
+          <FinishPage bounds={this.props.bounds} store={this.store} />
         )}
 
         {this.state.currentPage === "scores" && (

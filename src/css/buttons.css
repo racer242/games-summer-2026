@@ -43,12 +43,12 @@
 }
 
 .secondary-button:hover {
-  background: #fff;
-  color: #8200cc;
+  color: #fff;
+  background: #8200cc;
 }
 .secondary-button:active {
-  background: #fff;
-  color: #ff49b8;
+  color: #fff;
+  background: #ff49b8;
 }
 
 .secondary-button:disabled {
