@@ -289,3 +289,20 @@
     transform: scale(1);
   }
 }
+
+.note {
+  position: absolute;
+  width: 54px;
+  height: 72px;
+  pointer-events: none;
+  transition: all 3s ease-in;
+  z-index: 2;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.mobile .note {
+  width: 27px;
+  height: 36px;
+}

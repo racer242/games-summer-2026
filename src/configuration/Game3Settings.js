@@ -6,6 +6,29 @@ const Game3Settings = {
     height: 60,
   },
 
+  noteBounds: {
+    width: 80,
+    height: 80,
+  },
+
+  noteSources: [
+    {
+      src: require("../images/game3/objects/note1.png"),
+    },
+    {
+      src: require("../images/game3/objects/note2.png"),
+    },
+    {
+      src: require("../images/game3/objects/note3.png"),
+    },
+    {
+      src: require("../images/game3/objects/note4.png"),
+    },
+    {
+      src: require("../images/game3/objects/note5.png"),
+    },
+  ],
+
   objSources: [
     {
       id: "o1",
@@ -31,10 +54,12 @@ const Game3Settings = {
 
   bonusLife: 3,
   tapLife: 3,
+  noteLife: 10,
   mobileScale: 1,
   tapSize: 42,
   tapThrottlingDelay: 150,
   tapBonusCount: 2,
+  noteCreateCount: 2,
   bonusValue: 1,
 };
 

@@ -20,6 +20,7 @@ class Game3Page extends GamePage {
     this.state = {
       ...this.state,
       objects: [],
+      notes: [],
       bonuses: [],
       taps: [],
       canId: 0,
@@ -65,9 +66,28 @@ class Game3Page extends GamePage {
   doGame() {
     let objects = this.state.objects;
     let taps = this.state.taps;
+    let notes = this.state.notes;
     let bonuses = this.state.bonuses;
     let scoreAdded = this.state.scoreAdded;
     let tapAdded = this.state.tapAdded;
+
+    notes = notes.filter((v) => v.status != "note-destroy");
+    for (const note of notes) {
+      if (note.status == "note-show") {
+        note.life--;
+        if (note.life < 0) {
+          note.status = "note-destroy";
+        }
+      }
+      if (note.status == "note-on") {
+        note.status = "note-show";
+        note.cssX = note.cssDestX;
+        note.cssY = note.cssDestY;
+        note.scale = 1.3;
+        note.rotate = 360 - Math.random() * 720;
+        note.life = this.state.game3.noteLife;
+      }
+    }
 
     taps = taps.filter((v) => v.status != "tap-destroy");
     for (const tap of taps) {
@@ -102,6 +122,7 @@ class Game3Page extends GamePage {
       ...this.state,
       objects,
       taps,
+      notes,
       bonuses,
       scoreAdded,
       tapAdded,
@@ -126,6 +147,7 @@ class Game3Page extends GamePage {
   doClick(parentNode, clientX, clientY) {
     if (this.state.finished) return;
     let taps = this.state.taps;
+    let notes = this.state.notes;
     let stripesAmount = this.state.stripesAmount;
     let bonuses = this.state.bonuses;
     let tapCounter = this.state.tapCounter + 1;
@@ -161,9 +183,26 @@ class Game3Page extends GamePage {
       seed: Math.random() * 180,
     });
 
+    if (tapCounter % this.state.game3.noteCreateCount === 0) {
+      notes.push({
+        id: "note" + this.counter++,
+        cssX: x,
+        cssY: y,
+        cssDestX: Math.random() >= 0.5 ? "-20%" : "110%",
+        cssDestY: Math.random() * 100 + "%",
+        scale: 0.3,
+        rotate: 0,
+        status: "note-on",
+        ...this.state.game3.noteSources[
+          Math.floor(this.state.game3.noteSources.length * Math.random())
+        ],
+      });
+    }
+
     this.setState({
       ...this.state,
       taps,
+      notes,
       tapCounter,
       tapAdded: true,
       stripesAmount,
@@ -177,6 +216,7 @@ class Game3Page extends GamePage {
     let objs = [];
     let bonuses = [];
     let taps = [];
+    let notes = [];
 
     for (let i = 0; i < this.state.taps.length; i++) {
       let tap = this.state.taps[i];
@@ -226,6 +266,24 @@ class Game3Page extends GamePage {
             }}
           ></div>
         </div>,
+      );
+    }
+
+    for (let i = 0; i < this.state.notes.length; i++) {
+      let note = this.state.notes[i];
+      notes.push(
+        <div
+          key={note.id}
+          id={note.id}
+          className="note"
+          style={{
+            left: note.cssX,
+            top: note.cssY,
+            backgroundImage: "url(" + note.src + ")",
+            transform:
+              "scale(" + note.scale + ") rotate(" + note.rotate + "deg)",
+          }}
+        ></div>,
       );
     }
 
@@ -285,6 +343,7 @@ class Game3Page extends GamePage {
         <div className="gameScene">
           <div className="pageBg slow-pulsing"></div>
           {stripes}
+          {notes}
           <div
             className={
               "can can" +
