@@ -10,7 +10,7 @@
 // Установить название игры.
 // Просто переменная - используется внутри этого файла для удобства,
 // передается ниже в конфигурацию, сама на приложение не влияет
-window.gameId = "VIBE"; //"VIBE"; //"SNOWBALL"; //"LIGHTUP"; //"SECRET";
+window.gameId = "TAP"; //"VIBE"; //"SNOWBALL"; //"TAP"; //"SECRET";
 
 // Указать, авторизован пользователь или нет
 // Просто переменная - используется внутри этого файла для удобства,
@@ -45,6 +45,13 @@ window.signUp = function () {
 // без подтверждения
 window.playWithoutConfirmation = function () {
   console.log("playWithoutConfirmation");
+};
+
+/**
+ * Возвращает корневой элемент для рендеринга приложения
+ */
+window.getAppRoot = function () {
+  return document.getElementById("game");
 };
 
 // Функция инициализации приложения. Вызывается из обработчика в Index.html,
@@ -100,7 +107,7 @@ function onAppReadyHandler(app) {
         request2: { url: "/api/TentGame2.json", method: "GET" },
       },
       3: {
-        id: "LIGHTUP",
+        id: "TAP",
         // request1: { url: "/api/TentGame", method: "POST" },
         request1: { url: "/api/TentGame1.json", method: "GET" },
         // request2: { url: "/api/TentGame", method: "POST" },
@@ -116,7 +123,7 @@ function onAppReadyHandler(app) {
         request2: { url: "/api/SecretGame2.json", method: "GET" },
       },
       // Это индекс игр для быстрой идентификации внутри приложения
-      index: { VIBE: 1, SNOWBALL: 2, LIGHTUP: 3, SECRET: 4 },
+      index: { VIBE: 1, SNOWBALL: 2, TAP: 3, SECRET: 4 },
     },
     // Обработчик закрытия попапа
     closeHandler: window.closeGamePopup,

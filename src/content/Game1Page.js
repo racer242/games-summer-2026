@@ -266,11 +266,6 @@ class Game1Page extends GamePage {
       <div className="gamePage g1">
         <div className="gameScene">
           <div className="pageBg slow-pulsing"></div>
-          <div className="screen-snow">
-            {Array.from({ length: 30 }, (_, index) => (
-              <div key={index} className="snowflake" />
-            ))}
-          </div>
           {objs}
           {bonuses}
         </div>

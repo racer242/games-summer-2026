@@ -224,68 +224,30 @@
   text-transform: uppercase;
 }
 
-.g4-select-title {
-  position: absolute;
-  font-family: "Geologica";
+.tapCounterIndicatorValue {
+  font-family: "Dela Gothic One";
+  font-optical-sizing: auto;
+  text-align: center;
   font-style: normal;
-  font-weight: 600;
+  font-size: 32px;
+  line-height: 12px;
+  letter-spacing: 0.3pt;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mobile .tapCounterIndicatorValue {
   font-size: 20px;
-  line-height: 135%;
-  text-align: center;
-  color: #ffffff;
-}
-
-.mobile .g4-select-title {
-  font-size: 24px;
-}
-
-.g4-select-subtitle {
-  font-family: "Geologica";
-  font-style: normal;
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 135%;
-  text-align: center;
-  color: #6c1100;
-}
-
-.mobile .g4-select-subtitle {
-  font-size: 24px;
-}
-
-.g4-select-hint {
-  font-family: "Geologica";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 135%;
-  text-align: center;
-  color: #ffffff;
-}
-
-.mobile .g4-select-hint {
-  font-size: 18px;
-}
-
-.g3-hint {
-  font-family: "Geologica";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 18px;
-  text-align: center;
-}
-
-.mobile .g3-hint {
-  font-size: 20px;
-  line-height: 28px;
+  line-height: 20px;
 }
 
 .g-checkbox p {
-  font-family: "Geologica";
+  font-family: "Onest", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
   font-style: normal;
-  font-weight: 400;
+  text-align: center;
+  margin: 0;
   font-size: 14px;
-  line-height: 145%;
-  color: #5d279e;
+  line-height: 14px;
 }

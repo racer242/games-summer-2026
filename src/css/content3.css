@@ -1,0 +1,174 @@
+.g3 .pageBg .ray {
+  position: absolute;
+}
+
+.rayBody {
+  position: absolute;
+  background-position: top;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.mobile .g3 .pageBg .ray {
+  display: none;
+}
+
+.ray1 {
+  left: 320px;
+  top: 20px;
+  width: 462px;
+  height: 630px;
+}
+.rayBody1 {
+  transform: scaleX(-1);
+  background-image: url(../images/game3/rays/r1.png);
+}
+
+.ray2 {
+  left: 340px;
+  top: 48px;
+  width: 316px;
+  height: 630px;
+}
+.rayBody2 {
+  background-image: url(../images/game3/rays/r2.png);
+}
+
+.ray3 {
+  left: 60px;
+  top: 38px;
+  width: 740px;
+  height: 630px;
+}
+.rayBody3 {
+  background-image: url(../images/game3/rays/r3.png);
+}
+
+.ray4 {
+  left: 70px;
+  top: 20px;
+  width: 316px;
+  height: 630px;
+}
+.rayBody4 {
+  transform: scaleX(-1);
+  background-image: url(../images/game3/rays/r4.png);
+}
+
+.ray5 {
+  left: 710px;
+  top: 30px;
+  width: 434px;
+  height: 630px;
+}
+.rayBody5 {
+  background-image: url(../images/game3/rays/r5.png);
+}
+
+.ray6 {
+  left: 28px;
+  top: 20px;
+  width: 462px;
+  height: 630px;
+}
+.rayBody6 {
+  background-image: url(../images/game3/rays/r6.png);
+}
+
+.ray7 {
+  left: -193px;
+  top: 40px;
+  width: 434px;
+  height: 630px;
+}
+.rayBody7 {
+  transform: scaleX(-1);
+  background-image: url(../images/game3/rays/r5.png);
+}
+
+.ray8 {
+  left: 190px;
+  top: 30px;
+  width: 434px;
+  height: 630px;
+}
+.rayBody8 {
+  background-image: url(../images/game3/rays/r1.png);
+}
+
+.ray9 {
+  left: 448px;
+  top: 20px;
+  width: 462px;
+  height: 630px;
+}
+.rayBody9 {
+  transform: scaleX(-1);
+  background-image: url(../images/game3/rays/r6.png);
+}
+
+.ray10 {
+  left: 300px;
+  top: 48px;
+  width: 316px;
+  height: 630px;
+}
+.rayBody10 {
+  transform: scaleX(-1);
+  background-image: url(../images/game3/rays/r2.png);
+}
+
+.ray11 {
+  left: 570px;
+  top: 20px;
+  width: 316px;
+  height: 630px;
+}
+.rayBody11 {
+  background-image: url(../images/game3/rays/r4.png);
+}
+
+.ray12 {
+  left: 150px;
+  top: 38px;
+  width: 740px;
+  height: 630px;
+}
+.rayBody12 {
+  transform: scaleX(-1);
+  background-image: url(../images/game3/rays/r3.png);
+}
+
+.rayAnimation {
+  animation: rayAnimation 3s ease-in-out infinite;
+  display: flex;
+  height: 630px;
+  transform-origin: 0px 0px;
+}
+@keyframes rayAnimation {
+  0% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(-5deg);
+  }
+}
+
+.rayAnimation.flipped {
+  transform-origin: 100% 0px;
+}
+
+.rayAnimation:nth-child(3n + 1) {
+  animation-delay: 0ms;
+}
+.rayAnimation:nth-child(3n + 2) {
+  animation-delay: -1000ms;
+}
+.rayAnimation:nth-child(3n + 3) {
+  animation-delay: -2000ms;
+}

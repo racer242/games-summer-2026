@@ -1,610 +1,291 @@
-.g3-gameScene {
+.can {
   position: absolute;
-  display: block;
-}
-.g3-gameSceneBg {
-  position: absolute;
-  display: block;
-  background-image: url(../images/game3/bg-game.jpg);
-  background-position: center center;
+  left: 408px;
+  top: 96px;
+  width: 144px;
+  height: 374px;
+  background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.mobile .g3-gameSceneBg {
-  background-image: url(../images/game3/bg-game-mob.jpg);
-}
-
-.g3-tree {
-  position: absolute;
-  display: block;
-  width: 337px;
-  height: 475px;
-  left: 310px;
-  top: 16px;
-  background-image: url(../images/game3/tree.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.mobile .g3-tree {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -47%) scale(1.3);
-  pointer-events: none;
-}
-
-.g3-ball,
-.g3-ball-light,
-.g3-ball-hover {
-  position: absolute;
-  display: block;
-  width: 42px;
-  height: 42px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  pointer-events: all;
+  z-index: 2;
   cursor: pointer;
 }
-.g3-ball-light,
-.g3-ball-hover {
-  width: 108px;
-  height: 108px;
+
+.mobile .can {
+  left: 108px;
+  top: 154px;
+  width: 102px;
+  height: 265px;
+}
+
+.can0 {
+  background-image: url(../images/game3/cans/can1.png);
+}
+.can1 {
+  background-image: url(../images/game3/cans/can2.png);
+}
+.can2 {
+  background-image: url(../images/game3/cans/can3.png);
+}
+.can3 {
+  background-image: url(../images/game3/cans/can4.png);
+}
+.can4 {
+  background-image: url(../images/game3/cans/can5.png);
+}
+.can5 {
+  background-image: url(../images/game3/cans/can6.png);
+}
+.can6 {
+  background-image: url(../images/game3/cans/can7.png);
+}
+.can7 {
+  background-image: url(../images/game3/cans/can8.png);
+}
+
+.tapCounter {
+  position: absolute;
+  top: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+.mobile .tapCounter {
+  top: 97px;
+}
+
+.tapCounterIndicator {
+  width: 49px;
+  height: 49px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../images/game3/tap-indicator.svg);
+}
+
+.mobile .tapCounterIndicator {
+  width: 32px;
+  height: 32px;
+}
+
+.stripe {
+  position: absolute;
+  top: 42px;
+  width: 480px;
+  height: 540px;
+  pointer-events: none;
+  background: none !important;
+}
+
+.stripeBody {
+  position: absolute;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.mobile .stripe {
+  top: 72px;
+  width: 200px;
+  height: 420px;
+}
+
+.lStripe0,
+.lStripe1,
+.lStripe2,
+.lStripe3,
+.lStripe4,
+.lStripe5,
+.lStripe6,
+.lStripe7,
+.lStripe8 {
+  right: 50%;
+  transform-origin: 100% 50%;
+}
+
+.rStripe0,
+.rStripe1,
+.rStripe2,
+.rStripe3,
+.rStripe4,
+.rStripe5,
+.rStripe6,
+.rStripe7,
+.rStripe8 {
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  mix-blend-mode: lighten;
-  transition: opacity 300ms ease-in-out;
+  transform-origin: 0% 50%;
 }
 
-.g3-ball-hover {
-  opacity: 0;
+.lStripe0 {
+  background-image: url(../images/game3/patterns/left-stripe1.png);
+}
+.lStripe1 {
+  background-image: url(../images/game3/patterns/left-stripe2.png);
+}
+.lStripe2 {
+  background-image: url(../images/game3/patterns/left-stripe3.png);
+}
+.lStripe3 {
+  background-image: url(../images/game3/patterns/left-stripe4.png);
+}
+.lStripe4 {
+  background-image: url(../images/game3/patterns/left-stripe5.png);
+}
+.lStripe5 {
+  background-image: url(../images/game3/patterns/left-stripe6.png);
+}
+.lStripe6 {
+  background-image: url(../images/game3/patterns/left-pattern1.png);
+  z-index: 1;
+}
+.lStripe7 {
+  background-image: url(../images/game3/patterns/left-pattern2.png);
+  z-index: 1;
+}
+.lStripe8 {
+  background-image: url(../images/game3/patterns/left-pattern3.png);
+  z-index: 1;
 }
 
-.g3-ball:hover .g3-ball-hover {
-  animation: low-flicker 500ms infinite;
+.rStripe0 {
+  background-image: url(../images/game3/patterns/right-stripe1.png);
+}
+.rStripe1 {
+  background-image: url(../images/game3/patterns/right-stripe2.png);
+}
+.rStripe2 {
+  background-image: url(../images/game3/patterns/right-stripe3.png);
+}
+.rStripe3 {
+  background-image: url(../images/game3/patterns/right-stripe4.png);
+}
+.rStripe4 {
+  background-image: url(../images/game3/patterns/right-stripe5.png);
+}
+.rStripe5 {
+  background-image: url(../images/game3/patterns/right-stripe6.png);
+}
+.rStripe6 {
+  background-image: url(../images/game3/patterns/right-pattern1.png);
+  z-index: 1;
+}
+.rStripe7 {
+  background-image: url(../images/game3/patterns/right-pattern2.png);
+  z-index: 1;
+}
+.rStripe8 {
+  background-image: url(../images/game3/patterns/right-pattern3.png);
+  z-index: 1;
 }
 
-.g3-ball:nth-child(1) .flicker {
-  animation: flicker 2.4s 0.1s infinite;
+.stripeAnimation {
+  animation: stripeAnimation 4s ease-in-out infinite;
 }
-.g3-ball:nth-child(2) .flicker {
-  animation: flicker 3.1s 0.5s infinite;
-}
-.g3-ball:nth-child(3) .flicker {
-  animation: flicker 2.7s 0.3s infinite;
-}
-.g3-ball:nth-child(4) .flicker {
-  animation: flicker 4.2s 0.8s infinite;
-}
-.g3-ball:nth-child(5) .flicker {
-  animation: flicker 3.6s 0.2s infinite;
-}
-.g3-ball:nth-child(6) .flicker {
-  animation: flicker 2.9s 0.6s infinite;
-}
-.g3-ball:nth-child(7) .flicker {
-  animation: flicker 3.9s 0.4s infinite;
-}
-.g3-ball:nth-child(8) .flicker {
-  animation: flicker 2.5s 0.9s infinite;
-}
-.g3-ball:nth-child(9) .flicker {
-  animation: flicker 3.3s 0.7s infinite;
-}
-
-@keyframes flicker {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  10% {
-    opacity: 1;
-  }
-  20% {
-    opacity: 0.6;
-  }
-  30% {
-    opacity: 0.9;
-  }
-  40% {
-    opacity: 0.5;
+@keyframes stripeAnimation {
+  0% {
+    transform: skew(0deg);
   }
   50% {
-    opacity: 1;
+    transform: skewY(2deg);
   }
-  60% {
-    opacity: 0.7;
-  }
-  70% {
-    opacity: 0.95;
-  }
-  80% {
-    opacity: 0.6;
-  }
-  90% {
-    opacity: 1;
-  }
-}
-
-@keyframes low-flicker {
-  0%,
   100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 0.4;
+    transform: skew(0deg);
   }
 }
 
-.g3-tree-lights {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  left: 0px;
-  top: 0px;
-  width: 337px;
-  height: 475px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: fadeCycle 900ms infinite;
-  mix-blend-mode: lighten;
+.stripe-appear {
+  animation: stripe-appear 2000ms ease-out 500ms backwards;
 }
 
-.l1 {
-  background-image: url(../images/game3/t-lights1.png);
-  animation-delay: 0s;
-}
-.l2 {
-  background-image: url(../images/game3/t-lights2.png);
-  animation-delay: 300ms;
-}
-.l3 {
-  background-image: url(../images/game3/t-lights3.png);
-  animation-delay: 600ms;
-}
-
-.g3-tree-lights.fast {
-  animation-duration: 500ms;
-}
-
-@keyframes fadeCycle {
+@keyframes stripe-appear {
   0% {
     opacity: 0;
-  }
-  25% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 0.6;
+    transform: scaleX(2);
   }
   100% {
-    opacity: 0;
-  }
-}
-
-.g3-tree-balls {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  left: 0px;
-  top: 0px;
-  width: 337px;
-  height: 475px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: switchCycle 900ms infinite;
-  mix-blend-mode: lighten;
-}
-
-.b1 {
-  background-image: url(../images/game3/t-balls1.png);
-  animation-delay: 0s;
-}
-.b2 {
-  background-image: url(../images/game3/t-balls2.png);
-  animation-delay: 300ms;
-}
-.b3 {
-  background-image: url(../images/game3/t-balls3.png);
-  animation-delay: 600ms;
-}
-
-@keyframes switchCycle {
-  0% {
-    opacity: 0;
-  }
-  30% {
     opacity: 1;
-  }
-  60% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
+    transform: scaleX(1);
   }
 }
 
-.g3-star-light {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  left: 89px;
-  top: -38px;
-  width: 153px;
-  height: 149px;
-  background-image: url(../images/game3/star-light.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: star-light 1000ms ease-in infinite;
-  mix-blend-mode: lighten;
-}
-
-@keyframes star-light {
-  0% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.g3-house-lights {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  left: 683px;
-  top: 229px;
-  width: 147px;
-  height: 123px;
-  background-image: url(../images/game3/house-lights.png);
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: fadeCycle 500ms ease-in infinite;
-  mix-blend-mode: screen;
-}
-
-.mobile .g3-house-lights {
-  left: 515px;
-  top: 359px;
-  transform: scale(1.8);
-}
-
-.g3-house-flick-lights {
-  position: absolute;
-  display: block;
-  pointer-events: none;
-  left: 169px;
-  top: 233px;
-  width: 118px;
-  height: 119px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: fadeCycle 1200ms infinite;
-  mix-blend-mode: darken;
-}
-
-.mobile .g3-house-flick-lights {
-  left: -122px;
-  top: 365px;
-  transform: scale(1.7);
-}
-
-.fl1 {
-  background-image: url(../images/game3/house-light1.png);
-  animation-delay: 0s;
-}
-.fl2 {
-  background-image: url(../images/game3/house-light2.png);
-  animation-delay: 400ms;
-}
-.fl3 {
-  background-image: url(../images/game3/house-light3.png);
-  animation-delay: 800ms;
-}
-
-.g3-moose {
-  position: absolute;
-  display: block;
-  width: 125px;
-  height: 160px;
-  background-size: 250px 160px;
-  background-repeat: no-repeat;
-  pointer-events: none;
-  animation: g3-is-blinking 3000ms steps(1) infinite,
-    wobble 6000ms ease-in-out infinite;
-  transform-origin: center bottom;
-}
-.mobile .g3-moose {
-  width: 187px;
-  height: 240px;
-  background-size: 374px 240px;
-  background-repeat: no-repeat;
-}
-
-.moose1 {
-  left: 587px;
-  top: 270px;
-  background-image: url(../images/game3/moose1.png);
+.stripeAnimation:nth-child(5n + 1) {
   animation-delay: 0ms;
 }
-.mobile .moose1 {
-  left: 375px;
-  top: 390px;
+.stripeAnimation:nth-child(5n + 2) {
+  animation-delay: -300ms;
+}
+.stripeAnimation:nth-child(5n + 3) {
+  animation-delay: -600ms;
+}
+.stripeAnimation:nth-child(5n + 4) {
+  animation-delay: -1200ms;
+}
+.stripeAnimation:nth-child(5n + 4) {
+  animation-delay: -1500ms;
 }
 
-.moose2 {
-  left: 652px;
-  top: 315px;
-  background-image: url(../images/game3/moose2.png);
-  animation-delay: 1000ms;
-}
-.mobile .moose2 {
-  left: 378px;
-  top: 581px;
-}
-
-.moose3 {
-  left: 192px;
-  top: 326px;
-  background-image: url(../images/game3/moose3.png);
-  animation-delay: 2000ms;
-}
-.mobile .moose3 {
-  left: -70px;
-  top: 465px;
+.tap {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
 }
 
-@keyframes g3-is-blinking {
-  0%,
-  18%,
-  22%,
-  28%,
-  32%,
-  58%,
-  62%,
+.tapAnimation {
+  animation: tapAnimation 800ms ease-out;
+  animation-fill-mode: forwards;
+  will-change: contents;
+  opacity: 0.6;
+}
+@keyframes tapAnimation {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
   100% {
-    background-position: 0 0;
-  }
-
-  19%,
-  21%,
-  29%,
-  31%,
-  59%,
-  61% {
-    background-position: 100% 0;
+    transform: scale(1.8);
+    opacity: 0;
   }
 }
 
-@keyframes wobble {
-  0%,
-  100% {
-    transform: scaleY(1) rotate(0deg);
+.canImpulse {
+  animation: canImpulse 300ms ease-out;
+}
+
+@keyframes canImpulse {
+  0% {
+    transform: scale(1);
   }
-  12% {
-    transform: scaleY(0.996) rotate(-0.25deg);
+  10% {
+    transform: scale(0.97);
   }
-  24% {
-    transform: scaleY(0.998) rotate(0.18deg);
+  30% {
+    transform: scale(1) rotate(2deg);
   }
-  36% {
-    transform: scaleY(0.995) rotate(0.32deg); /* максимальное "приседание" */
-  }
-  48% {
-    transform: scaleY(0.997) rotate(-0.15deg);
+  40% {
+    transform: scale(0.97);
   }
   60% {
-    transform: scaleY(0.996) rotate(0.28deg);
+    transform: scale(1) rotate(-2deg);
   }
-  72% {
-    transform: scaleY(0.999) rotate(-0.35deg);
-  }
-  84% {
-    transform: scaleY(0.9955) rotate(0.09deg);
-  }
-  96% {
-    transform: scaleY(0.9975) rotate(0.21deg);
-  }
-}
-
-.g3-sequence-container {
-  position: absolute;
-  left: 60px;
-  top: 116px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 8px;
-  gap: 8px;
-  border-radius: 64px;
-  transform: translateX(-50%);
-}
-
-.g3-sequence-group-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.4);
-  padding: 4px;
-  gap: 8px;
-  border: 1px solid #fff;
-  border-radius: 64px;
-}
-
-.g3-sequence-ball,
-.g3-sequence-ball-light,
-.g3-sequence-ball-empty {
-  position: relative;
-  display: block;
-  width: 28px;
-  height: 28px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  pointer-events: none;
-}
-.g3-sequence-ball-light {
-  position: absolute;
-  width: 74px;
-  height: 74px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.g3-sequence-ball-empty {
-  background-color: #fff;
-  border-radius: 19px;
-}
-
-.searching-ball {
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3))
-    drop-shadow(0 0 5px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 6px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 7px rgba(255, 255, 255, 1));
-}
-
-.g3-start-message {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  width: 284px;
-  height: 88px;
-
-  left: calc(50% - 142px);
-  top: calc(50% - 44px);
-
-  position: absolute;
-
-  background: rgba(255, 255, 255, 0.8);
-  opacity: 0.5;
-  backdrop-filter: blur(8px);
-  border-radius: 32px;
-
-  color: #5d279e;
-}
-
-.g3-hint {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  left: 0;
-  bottom: 20px;
-  position: absolute;
-
-  background: rgba(255, 255, 255, 0.8);
-
-  backdrop-filter: blur(8px);
-  border-radius: 10px;
-  padding: 10px;
-  width: calc(100% - 440px);
-  margin-left: 220px;
-
-  color: #5d279e;
-  transition: all 1000ms ease-in-out;
-}
-
-.g3-hint.message1 {
-  width: calc(100% - 440px);
-  margin-left: 220px;
-}
-
-.mobile .g3-hint.message1 {
-  width: calc(100% - 220px);
-  margin-left: 90px;
-}
-
-.g3-hint.message2 {
-  width: calc(100% - 240px);
-  margin-left: 120px;
-}
-
-.mobile .g3-hint.message2 {
-  width: calc(100% - 80px);
-  margin-left: 40px;
-}
-
-.appear-start-message {
-  animation: appear-countdown 1000ms ease-in-out;
-  opacity: 0;
-  will-change: contents;
-}
-@keyframes appear-countdown {
-  0% {
-    opacity: 0;
-    transform: translateX(-200px);
-  }
-  20% {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-  80% {
-    opacity: 1;
-    transform: translateX(0px);
+  70% {
+    transform: scale(0.97);
   }
   100% {
-    opacity: 0;
-    transform: translateX(200px);
-  }
-}
-
-.play-icon {
-  position: absolute;
-  background-image: url(../images/game3/play.svg);
-  width: 22px;
-  height: 26px;
-  background-size: 22px 26px;
-  background-repeat: no-repeat;
-  transform: translate(-37%, -50%);
-  animation: play-icon 600ms ease-in-out infinite;
-}
-
-@keyframes play-icon {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 1;
+    transform: scale(1);
   }
 }

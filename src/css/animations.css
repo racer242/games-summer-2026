@@ -418,17 +418,35 @@
   animation-duration: 15s !important;
 }
 
+.delay100ms {
+  animation-delay: 100ms !important;
+}
+.delay200ms {
+  animation-delay: 200ms !important;
+}
 .delay300ms {
   animation-delay: 300ms !important;
+}
+.delay400ms {
+  animation-delay: 400ms !important;
 }
 .delay500ms {
   animation-delay: 500ms !important;
 }
+.delay600ms {
+  animation-delay: 600ms !important;
+}
 .delay800ms {
   animation-delay: 800ms !important;
 }
+.delay900ms {
+  animation-delay: 900ms !important;
+}
 .delay1s {
   animation-delay: 1s !important;
+}
+.delay1500ms {
+  animation-delay: 1500ms !important;
 }
 .delay2s {
   animation-delay: 2s !important;

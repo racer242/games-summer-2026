@@ -1,471 +1,327 @@
 import React from "react";
 import "../css/game3.css";
-import "../css/fireworks-particles.scss";
+import "../css/tap-particles.scss";
 import GamePage from "./GamePage";
 import { shuffle } from "../utils/arrayTools";
 import CircularProgress from "../components/CircularProgress";
+
+var shuffledCans = [];
+const cansCount = 8;
+const stripesCount = 18;
 
 class Game3Page extends GamePage {
   constructor(props) {
     super(props);
 
+    if (shuffledCans.length === 0) {
+      shuffledCans = shuffle(Array.from({ length: cansCount }, (_, i) => i));
+    }
+
     this.state = {
       ...this.state,
+      objects: [],
+      bonuses: [],
+      taps: [],
+      canId: 0,
+      tapCounter: 0,
+      stripesAmount: 0,
+      stripes: [],
       gameDuration: this.state.game3.gameDuration,
       stopDuration: this.state.game3.stopDuration,
       stepDuration: this.state.game3.stepDuration,
-      win: false,
-      ...this.fillBalls(),
-      userSequence: [],
-      isStarting: true,
-      isPlaying: false,
-      playingBallIndex: -1,
-      isRepeating: false,
-      repeatingBallIndex: 0,
+      scoreAdded: false,
+      tapAdded: false,
     };
 
-    this.ball_clickHandler = this.ball_clickHandler.bind(this);
-  }
-
-  fillBalls() {
-    let balls = [];
-    let sequence = [];
-    for (let i = 0; i < this.state.game3.ballSources.length; i++) {
-      let ball = this.state.game3.ballSources[i];
-      balls.push({
-        ...ball,
-        selected: false,
-        revealed: 0,
-      });
-      sequence.push({
-        ...ball,
-        index: i,
-        revealed: false,
-      });
-    }
-    shuffle(sequence);
-    return { balls, sequence };
+    this.tapThrottling = false;
+    this.can_clickHandler = this.can_clickHandler.bind(this);
   }
 
   doStart() {
-    this.start();
-  }
-
-  stopGame() {
-    super.stopGame();
-    clearTimeout(this.startTimeout);
-    clearTimeout(this.startPlayingTimeout);
-    clearTimeout(this.startRepeatingTimeout);
-  }
-
-  start() {
-    this.startTimeout = setTimeout(() => {
-      this.setState({
-        ...this.state,
-        isStarting: true,
-        isPlaying: false,
-        win: false,
-        ...this.fillBalls(),
-        userSequence: [],
-        playingBallIndex: -1,
-        isRepeating: false,
-        repeatingBallIndex: 0,
-      });
-
-      this.startPlayingTimeout = setTimeout(() => {
-        this.countdown = 10;
-        this.setState({
-          ...this.state,
-          isStarting: false,
-          isPlaying: true,
-          playingBallIndex: 0,
-          countdown: this.countdown,
-        });
-
-        this.playing();
-      }, 3000);
-    }, 100);
-  }
-
-  playing() {
-    this.startRepeatingTimeout = setTimeout(() => {
-      let playingBallIndex = this.state.playingBallIndex + 1;
-      let isRepeating = playingBallIndex >= this.state.sequence.length;
-      playingBallIndex = isRepeating ? -1 : playingBallIndex;
-      this.countdown = 0;
-      this.setState({
-        ...this.state,
-        isPlaying: !isRepeating,
-        playingBallIndex,
-        isRepeating,
-        countdown: this.countdown,
-      });
-
-      if (!isRepeating) {
-        this.playing();
-      }
-    }, this.state.game3.playingBallDuration);
-  }
-
-  doGame() {
-    if (this.state.isRepeating) {
-      let score = this.state.game3.gameDuration - this.state.countdown;
-      this.setState({
-        ...this.state,
-        score,
-      });
-    }
-    return true;
-  }
-
-  ball_clickHandler(event) {
-    if (this.state.finished) return;
-    let ballId = event.currentTarget.id;
-    let sequence = this.state.sequence;
-    let balls = this.state.balls;
-    let win = this.state.win;
-    let repeatingBallIndex = this.state.repeatingBallIndex;
-    let sequenceBall = sequence[repeatingBallIndex];
-    if (sequenceBall.id === ballId) {
-      sequence[repeatingBallIndex].revealed = true;
-      let ball = balls.filter((v) => v.id === ballId)[0];
-      ball.selected = true;
-      ball.revealed = ball.revealed + 1;
-      repeatingBallIndex++;
-      if (repeatingBallIndex >= sequence.length) {
-        win = true;
-
-        if (this.gameTimer != null) clearTimeout(this.gameTimer);
-        this.gameTimer = null;
-        if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
-        this.countdownTimer = null;
-        this.started = false;
-
-        this.finishingTimeout = setTimeout(() => {
-          this.stopGame();
-          this.finishGame();
-        }, this.state.game3.finishingDuration);
-      }
-    } else {
-      if (this.state.game3.clearBallsAfterFail) {
-        if (this.state.game3.savePointAfter === 0) {
-          repeatingBallIndex = 0;
-          balls = balls.map((v) => {
-            v.selected = false;
-            return v;
-          });
-        } else {
-          repeatingBallIndex =
-            Math.floor(repeatingBallIndex / this.state.game3.savePointAfter) *
-            this.state.game3.savePointAfter;
-          for (let i = 0; i < sequence.length; i++) {
-            balls[sequence[i].index].selected = i < repeatingBallIndex;
-          }
-        }
-      }
+    const canId = shuffledCans.pop();
+    let stripes = [];
+    let leftStripes = shuffle(
+      Array.from({ length: Math.floor(stripesCount / 2) }, (_, i) => i),
+    );
+    let rightStripes = shuffle(
+      Array.from({ length: Math.floor(stripesCount / 2) }, (_, i) => i),
+    );
+    for (let i = 0; i < Math.floor(stripesCount / 2); i++) {
+      stripes.push("lStripe" + leftStripes.pop());
+      stripes.push("rStripe" + rightStripes.pop());
     }
 
     this.setState({
       ...this.state,
-      sequence,
-      balls,
-      repeatingBallIndex,
-      win,
+      canId,
+      stripes,
+    });
+  }
+
+  stopGame() {
+    super.stopGame();
+  }
+
+  doGame() {
+    let objects = this.state.objects;
+    let taps = this.state.taps;
+    let bonuses = this.state.bonuses;
+    let scoreAdded = this.state.scoreAdded;
+    let tapAdded = this.state.tapAdded;
+
+    taps = taps.filter((v) => v.status != "tap-destroy");
+    for (const tap of taps) {
+      if (tap.status == "tap-show") {
+        tap.life--;
+        if (tap.life < 0) {
+          tap.status = "tap-destroy";
+        }
+      }
+      if (tap.status == "tap-on") {
+        tapAdded = false;
+        tap.status = "tap-show";
+        tap.life = this.state.game3.tapLife;
+      }
+    }
+
+    bonuses = bonuses.filter((v) => v.status != "bonus-destroy");
+    for (const bonus of bonuses) {
+      if (bonus.status == "bonus-show") {
+        bonus.life--;
+        if (bonus.life < 0) {
+          bonus.status = "bonus-destroy";
+        }
+      }
+      if (bonus.status == "bonus-on") {
+        scoreAdded = false;
+        bonus.status = "bonus-show";
+        bonus.life = this.state.game3.bonusLife;
+      }
+    }
+    this.setState({
+      ...this.state,
+      objects,
+      taps,
+      bonuses,
+      scoreAdded,
+      tapAdded,
+    });
+    return true;
+  }
+
+  can_clickHandler(event) {
+    let parentNode = event.currentTarget.parentNode;
+    let clientX = event.clientX;
+    let clientY = event.clientY;
+    if (!this.tapThrottling) {
+      this.doClick(parentNode, clientX, clientY);
+      this.tapThrottling = true;
+      clearTimeout(this.tapTimeout);
+    }
+    this.tapTimeout = setTimeout(() => {
+      this.tapThrottling = false;
+    }, this.state.game3.tapThrottlingDelay);
+  }
+
+  doClick(parentNode, clientX, clientY) {
+    if (this.state.finished) return;
+    let taps = this.state.taps;
+    let stripesAmount = this.state.stripesAmount;
+    let bonuses = this.state.bonuses;
+    let tapCounter = this.state.tapCounter + 1;
+    let score = this.state.score;
+    let scoreAdded = this.state.scoreAdded;
+
+    let b = parentNode.getBoundingClientRect();
+    let x = (clientX - b.x) / this.props.bounds.pageScale;
+    let y = (clientY - b.y) / this.props.bounds.pageScale;
+    if (this.props.bounds.mobileSize) {
+      x /= this.state.game3.mobileScale;
+      y /= this.state.game3.mobileScale;
+    }
+
+    if (tapCounter % this.state.game3.tapBonusCount === 0) {
+      stripesAmount++;
+      bonuses.push({
+        id: "bonus" + this.counter++,
+        cssX: x + this.state.game3.bonusBounds.width,
+        cssY: y,
+        value: this.state.game3.bonusValue,
+        status: "bonus-on",
+      });
+      score += this.state.game3.bonusValue;
+      scoreAdded = true;
+    }
+
+    taps.push({
+      id: "tap" + this.counter++,
+      cssX: x,
+      cssY: y,
+      status: "tap-on",
+      seed: Math.random() * 180,
+    });
+
+    this.setState({
+      ...this.state,
+      taps,
+      tapCounter,
+      tapAdded: true,
+      stripesAmount,
+      bonuses,
+      score,
+      scoreAdded,
     });
   }
 
   render() {
-    let particles = [];
-    if (this.state.win) {
-      for (let i = 0; i < this.state.game3.particlesCount; i++) {
+    let objs = [];
+    let bonuses = [];
+    let taps = [];
+
+    for (let i = 0; i < this.state.taps.length; i++) {
+      let tap = this.state.taps[i];
+      let particles = [];
+      for (let j = 0; j < this.state.game3.tapParticlesCount; j++) {
         particles.push(
-          <div key={"p" + i} className="fireworks-particle"></div>
+          <div
+            key={"p" + j}
+            className="tap-particle"
+            style={{ "--rr": tap.seed + "deg" }}
+          ></div>,
         );
       }
-    }
-
-    let balls = [];
-    for (let i = 0; i < this.state.balls.length; i++) {
-      let ball = this.state.balls[i];
-
-      let ballParticles = [];
-      for (let i = 0; i < this.state.game3.particlesCount; i++) {
-        ballParticles.push(
-          <div key={"p" + i} className="ball-fireworks-particle"></div>
-        );
-      }
-
-      balls.push(
-        <div
-          key={ball.id}
-          id={ball.id}
-          className="g3-ball"
-          style={{
-            left: ball.x,
-            top: ball.y,
-            backgroundImage: `url(${ball.src})`,
-            pointerEvents:
-              this.state.isRepeating && !this.state.finished && !ball.selected
-                ? "all"
-                : "none",
-          }}
-          onClick={this.ball_clickHandler}
-        >
-          {ball.revealed === 1 && (
-            <div className="ball-fireworks-particle-container">
-              {ballParticles}
-            </div>
-          )}
-
+      taps.push(
+        <div key={tap.id}>
           <div
-            className={"g3-ball-light" + (this.state.win ? " flicker" : "")}
+            className="tap-particles-container"
             style={{
-              backgroundImage: `url(${ball.srcLight})`,
-              opacity:
-                ball.id ===
-                  this.state.sequence[this.state.playingBallIndex]?.id ||
-                ball.selected
-                  ? 1
-                  : 0,
-            }}
-          ></div>
-          <div
-            className="g3-ball-hover"
-            style={{
-              backgroundImage: `url(${ball.srcLight})`,
-            }}
-          ></div>
-        </div>
-      );
-    }
-
-    let sequence = [];
-    for (let i = 0; i < this.state.sequence.length; i++) {
-      let ball = this.state.sequence[i];
-      sequence.push(
-        <div
-          key={ball.id}
-          id={ball.id}
-          className="g3-sequence-ball"
-          style={
-            i <= this.state.playingBallIndex || ball.revealed
-              ? {
-                  backgroundImage: `url(${ball.src})`,
-                }
-              : {}
-          }
-        >
-          <div
-            className={
-              "g3-sequence-ball-empty" +
-              (this.state.isRepeating && this.state.repeatingBallIndex === i
-                ? " searching-ball"
-                : "")
-            }
-            style={{
-              visibility: !(i <= this.state.playingBallIndex || ball.revealed)
-                ? "visible"
-                : "hidden",
-              // backgroundImage: `url(${ball.src})`,
-              // opacity: ball.revealed ? "1" : "0.5",
-            }}
-          ></div>
-          <div
-            className="g3-sequence-ball-light"
-            style={{
-              backgroundImage: `url(${ball.srcLight})`,
-              visibility:
-                ball.revealed && this.state.repeatingBallIndex === i
-                  ? "visible"
-                  : "hidden",
-            }}
-          ></div>
-        </div>
-      );
-    }
-
-    let time = this.state.isStarting
-      ? 4 - this.state.countdown
-      : this.state.isPlaying
-      ? 0
-      : this.state.game3.gameDuration - this.state.countdown;
-    let timeLeft = this.state.isStarting
-      ? Math.min(Math.max(1 + 1 / 3 - time / 3, 0), 1)
-      : this.state.isPlaying
-      ? 1
-      : 1 - time / this.state.game3.gameDuration;
-
-    return (
-      <div className="g3 gamePage">
-        <div className="gameScene">
-          <div
-            className="g3-gameScene"
-            style={{
-              left: "50%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-              width: this.props.bounds.mobileSize
-                ? this.state.mobileBounds.width
-                : this.state.desktopBounds.width,
-              height: this.props.bounds.mobileSize
-                ? this.state.mobileBounds.height
-                : this.state.desktopBounds.height,
-              pointerEvents: this.state.activityEnabled ? "all" : "none",
+              left: tap.cssX,
+              top: tap.cssY,
             }}
           >
-            <div
-              className="g3-gameSceneBg"
-              style={{
-                width: this.props.bounds.mobileSize
-                  ? this.state.mobileBounds.width
-                  : this.state.desktopBounds.width,
-                height: this.props.bounds.mobileSize
-                  ? this.state.mobileBounds.height
-                  : this.state.desktopBounds.height,
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            ></div>
-
-            <div className="g3-house-lights"></div>
-
-            <div className="g3-house-flick-lights fl1"></div>
-            <div className="g3-house-flick-lights fl2"></div>
-            <div className="g3-house-flick-lights fl3"></div>
-
-            <div className="g3-moose moose1"></div>
-
-            <div className="g3-moose moose3"></div>
-            {this.state.win && (
-              <div className="fireworks-particle-container">{particles}</div>
-            )}
-
-            <div className="g3-tree">
-              <div
-                className={
-                  "g3-tree-lights l1" + (this.state.win ? " fast" : "")
-                }
-              ></div>
-              <div
-                className={
-                  "g3-tree-lights l2" + (this.state.win ? " fast" : "")
-                }
-              ></div>
-              <div
-                className={
-                  "g3-tree-lights l3" + (this.state.win ? " fast" : "")
-                }
-              ></div>
-              {this.state.win && (
-                <>
-                  <div className="g3-tree-balls b1"></div>
-                  <div className="g3-tree-balls b2"></div>
-                  <div className="g3-tree-balls b3"></div>
-                  <div className="g3-star-light"></div>
-                </>
-              )}
-              <div>{balls}</div>
-            </div>
-            <div className="g3-moose moose2"></div>
+            {particles}
           </div>
+          <div
+            className="tap tapAnimation"
+            id={tap.id}
+            style={{
+              left: tap.cssX - this.state.game3.tapSize / 2,
+              top: tap.cssY - this.state.game3.tapSize / 2,
+            }}
+          ></div>
+          <div
+            className="tap tapAnimation delay300ms"
+            id={tap.id}
+            style={{
+              left: tap.cssX - this.state.game3.tapSize / 2,
+              top: tap.cssY - this.state.game3.tapSize / 2,
+            }}
+          ></div>
+          <div
+            className="tap tapAnimation delay600ms"
+            id={tap.id}
+            style={{
+              left: tap.cssX - this.state.game3.tapSize / 2,
+              top: tap.cssY - this.state.game3.tapSize / 2,
+            }}
+          ></div>
+        </div>,
+      );
+    }
+
+    for (let i = 0; i < this.state.bonuses.length; i++) {
+      let bonus = this.state.bonuses[i];
+      let particles = [];
+      if (bonus.value > 0) {
+        for (let j = 0; j < this.state.game1.particlesCount; j++) {
+          particles.push(<div key={"p" + j} className="bonus-particle"></div>);
+        }
+      }
+      bonuses.push(
+        <div key={bonus.id}>
+          <div
+            className="bonus-particle-container"
+            style={{
+              left: bonus.cssX,
+              top: bonus.cssY,
+            }}
+          >
+            {particles}
+          </div>
+          <div
+            className="bonus-box bonusUp display"
+            id={bonus.id}
+            style={{
+              left: bonus.cssX,
+              top: bonus.cssY,
+            }}
+          >
+            <div className={"bonus g1" + (bonus.value > 0 ? "" : " negative")}>
+              <div className="bonus-back spin duraton1s"></div>
+              {bonus.value > 0 ? "+" + bonus.value : bonus.value}
+            </div>
+          </div>
+        </div>,
+      );
+    }
+
+    let stripes = [];
+    for (let i = 0; i < this.state.stripesAmount; i++) {
+      stripes.push(
+        <div
+          key={"stripe" + i}
+          className={"stripe stripe-appear " + this.state.stripes[i]}
+        >
+          <div
+            className={"stripeBody stripeAnimation " + this.state.stripes[i]}
+          ></div>
+        </div>,
+      );
+    }
+    let time = this.state.game3.gameDuration - this.state.countdown;
+
+    return (
+      <div className="gamePage g3">
+        <div className="gameScene">
+          <div className="pageBg slow-pulsing"></div>
+          {stripes}
+          <div
+            className={
+              "can can" +
+              this.state.canId +
+              (this.state.tapAdded ? " canImpulse" : "")
+            }
+            onPointerDown={this.can_clickHandler}
+          ></div>
+          {objs}
+          {taps}
+          {bonuses}
+        </div>
+        <div className="tapCounter">
+          <div className="tapCounterIndicator"></div>
+          <div className="tapCounterIndicatorValue">
+            {this.state.tapCounter}
+          </div>
+        </div>
+        <div className={"countdown display " + (time < 10 ? " warning" : "")}>
+          <CircularProgress value={1 - time / this.state.game1.gameDuration}>
+            {time}
+          </CircularProgress>
         </div>
         <div
           className={
-            "countdown display " +
-            (time < 10 && !this.state.isStarting && !this.state.isPlaying
-              ? " warning"
-              : "") +
-            (this.state.isStarting ? " is-starting" : "") +
-            (this.state.isPlaying ? " is-playing" : "")
+            "score display" + (this.state.scoreAdded ? " impulse" : "")
           }
         >
-          <CircularProgress value={timeLeft}>
-            {!this.state.isPlaying && <>{time}</>}
-            {this.state.isPlaying && <div className="play-icon"></div>}
-          </CircularProgress>
+          <div className="score-decor spin duraton20s"></div>
+          {this.state.score}
         </div>
-
-        {this.state.game3.savePointAfter === 0 && (
-          <div className="g3-sequence-container">{sequence}</div>
-        )}
-        {this.state.game3.savePointAfter > 0 && (
-          <div className="g3-sequence-container">
-            {Array.from(
-              {
-                length: Math.ceil(
-                  sequence.length / this.state.game3.savePointAfter
-                ),
-              },
-              (_, groupIndex) => {
-                const start = groupIndex * this.state.game3.savePointAfter;
-                return (
-                  <div key={groupIndex} className="g3-sequence-group-container">
-                    {sequence
-                      .slice(start, start + this.state.game3.savePointAfter)
-                      .map((item, i) => (
-                        <div key={i} className="item">
-                          {item}
-                        </div>
-                      ))}
-                  </div>
-                );
-              }
-            )}
-          </div>
-        )}
-
-        {this.state.isStarting && (
-          <>
-            <div
-              className="g3-start-message appear-start-message"
-              style={{ animationDelay: "0ms" }}
-            >
-              <h2>Приготовься</h2>
-            </div>
-            <div
-              className="g3-start-message appear-start-message"
-              style={{ animationDelay: "1000ms" }}
-            >
-              <h2>Внимание</h2>
-            </div>
-            <div
-              className="g3-start-message appear-start-message"
-              style={{ animationDelay: "2000ms" }}
-            >
-              <h2>Поехали!</h2>
-            </div>
-          </>
-        )}
-
-        {this.state.isPlaying && (
-          <div
-            className="g3-hint appear-bottom message1"
-            style={{ animationDuration: "500ms" }}
-          >
-            Запомни последовательность, в которой загораются огоньки
-          </div>
-        )}
-
-        {this.state.isRepeating && (
-          <div
-            className="g3-hint appear-bottom message2"
-            style={{
-              animationDuration: "500ms",
-              opacity: this.state.win ? 0 : 1,
-            }}
-          >
-            Повторяй последовательность, пока не угадаешь полностью верно тройку
-            огоньков
-          </div>
-        )}
-
         <div
           className="pageOverlay"
           style={{
             visibility: this.state.finished ? "visible" : "hidden",
             opacity: this.state.finished ? 1 : 0,
-            transitionDuration: this.state.game3.stopDuration + "ms",
+            transitionDuration: this.state.game1.stopDuration + "ms",
           }}
         ></div>
       </div>

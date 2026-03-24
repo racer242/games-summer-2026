@@ -47,55 +47,38 @@
   pointer-events: none;
 }
 
+.pageOverlay {
+  z-index: 10;
+}
+
 .g1 .pageBg {
   background-image: url(../images/game1/bg.jpg);
+}
+.g3 .pageBg {
+  background-image: url(../images/game3/bg.jpg);
 }
 
 .mobile .g1 .pageBg {
   background-image: url(../images/game1/bg-mob.jpg);
+}
+.mobile .g3 .pageBg {
+  background-image: url(../images/game3/bg-mob.jpg);
 }
 
 .g1.common .pageBg {
   background-image: url(../images/game1/bg-common.jpg);
   background-size: cover;
 }
-
-.mobile .g1.common .pageBg {
-  background-image: url(../images/game1/bg-common-mob.jpg);
-}
-
-.g2 .pageBg {
-  background-color: #d9bed2;
-  background-image: url(../images/game2/bg.jpg);
-  background-size: cover;
-}
-
-.mobile .g2 .pageBg {
-  background-image: url(../images/game2/bg-mob.jpg);
-}
-
-.g2.common .pageBg {
-  background-image: url(../images/game2/bg-common.jpg);
-  background-size: cover;
-}
-
-.mobile .g2.common .pageBg {
-  background-image: url(../images/game2/bg-common-mob.jpg);
-}
-
-.g3 .pageBg {
+.g3.common .pageBg {
   background-image: url(../images/game3/bg-common.jpg);
   background-size: cover;
 }
 
-.mobile .g3 .pageBg {
-  background-image: url(../images/game3/bg-common-mob.jpg);
+.mobile .g1.common .pageBg {
+  background-image: url(../images/game1/bg-common-mob.jpg);
 }
-
-.g4 .pageBg {
-  background: linear-gradient(180deg, #ff49b8 0%, #dc0008 70%);
-  background-size: 100% 200%;
-  transition: all 1000ms ease-in-out;
+.mobile .g3.common .pageBg {
+  background-image: url(../images/game3/bg-common-mob.jpg);
 }
 
 .head {
@@ -139,20 +122,8 @@
 .g1 .logo {
   background-image: url(../images/game1/logo.png);
 }
-
-.g2 .logo {
-  height: 140px;
-  background-image: url(../images/game2/logo.png);
-  background-position: 0px 0px;
-}
-
 .g3 .logo {
   background-image: url(../images/game3/logo.png);
-}
-
-.g4 .logo {
-  display: block;
-  background-image: url(../images/game4/logo.png);
 }
 
 .logo-bg {
@@ -162,7 +133,6 @@
   background-size: contain;
   background-position: center bottom;
   background-repeat: no-repeat;
-  background-image: url(../images/game1/title-bg.svg);
 }
 
 .mobile .logo-bg {
@@ -170,12 +140,11 @@
   height: 198px;
 }
 
-.g3 .logo-bg {
-  background-image: url(../images/game3/logo-bg.svg);
+.g1 .logo-bg {
+  background-image: url(../images/game1/title-bg.svg);
 }
-
-.g4 .logo-bg {
-  background-image: url(../images/game4/logo-bg.svg);
+.g3 .logo-bg {
+  background-image: url(../images/game3/title-bg.svg);
 }
 
 .logo-item {
@@ -185,12 +154,18 @@
   background-size: contain;
   background-position: center bottom;
   background-repeat: no-repeat;
-  background-image: url(../images/game1/title-item.svg);
 }
 
 .mobile .logo-item {
   width: 90px;
   height: 90px;
+}
+
+.g1 .logo-item {
+  background-image: url(../images/game1/title-item.svg);
+}
+.g3 .logo-item {
+  background-image: url(../images/game3/title-item.svg);
 }
 
 .plate {
