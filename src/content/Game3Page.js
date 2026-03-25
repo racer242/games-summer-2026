@@ -89,6 +89,24 @@ class Game3Page extends GamePage {
       }
     }
 
+    objects = objects.filter((v) => v.status != "obj-destroy");
+    for (const obj of objects) {
+      if (obj.status == "obj-show") {
+        obj.life--;
+        if (obj.life < 0) {
+          obj.status = "obj-destroy";
+        }
+      }
+      if (obj.status == "obj-on") {
+        obj.status = "obj-show";
+        obj.cssX = obj.cssDestX;
+        obj.cssY = obj.cssDestY;
+        obj.scale = this.props.bounds.mobileSize ? 1 : 1.5;
+        obj.rotate = 360 - Math.random() * 720;
+        obj.life = this.state.game3.objectLife;
+      }
+    }
+
     taps = taps.filter((v) => v.status != "tap-destroy");
     for (const tap of taps) {
       if (tap.status == "tap-show") {
@@ -131,11 +149,13 @@ class Game3Page extends GamePage {
   }
 
   can_clickHandler(event) {
+    let isObject = event.currentTarget?.id?.indexOf("obj") >= 0;
+
     let parentNode = event.currentTarget.parentNode;
     let clientX = event.clientX;
     let clientY = event.clientY;
     if (!this.tapThrottling) {
-      this.doClick(parentNode, clientX, clientY);
+      this.doClick(parentNode, clientX, clientY, isObject);
       this.tapThrottling = true;
       clearTimeout(this.tapTimeout);
     }
@@ -144,10 +164,11 @@ class Game3Page extends GamePage {
     }, this.state.game3.tapThrottlingDelay);
   }
 
-  doClick(parentNode, clientX, clientY) {
+  doClick(parentNode, clientX, clientY, isObject) {
     if (this.state.finished) return;
     let taps = this.state.taps;
     let notes = this.state.notes;
+    let objects = this.state.objects;
     let stripesAmount = this.state.stripesAmount;
     let bonuses = this.state.bonuses;
     let tapCounter = this.state.tapCounter + 1;
@@ -162,16 +183,32 @@ class Game3Page extends GamePage {
       y /= this.state.game3.mobileScale;
     }
 
-    if (tapCounter % this.state.game3.tapBonusCount === 0) {
+    if (tapCounter % this.state.game3.stripeAddCount === 0) {
       stripesAmount++;
+    }
+
+    if (tapCounter % this.state.game3.tapBonusCount === 0) {
       bonuses.push({
         id: "bonus" + this.counter++,
         cssX: x + this.state.game3.bonusBounds.width,
         cssY: y,
         value: this.state.game3.bonusValue,
         status: "bonus-on",
+        delay: isObject,
       });
       score += this.state.game3.bonusValue;
+      scoreAdded = true;
+    }
+
+    if (isObject) {
+      bonuses.push({
+        id: "bonus" + this.counter++,
+        cssX: x + this.state.game3.bonusBounds.width,
+        cssY: y,
+        value: this.state.game3.objectBonusValue,
+        status: "bonus-on",
+      });
+      score += this.state.game3.objectBonusValue;
       scoreAdded = true;
     }
 
@@ -183,11 +220,11 @@ class Game3Page extends GamePage {
       seed: Math.random() * 180,
     });
 
-    if (tapCounter % this.state.game3.noteCreateCount === 0) {
+    if (!isObject && tapCounter % this.state.game3.noteCreateCount === 0) {
       notes.push({
         id: "note" + this.counter++,
-        cssX: x,
-        cssY: y,
+        cssX: x - this.state.game3.noteBounds.width / 2,
+        cssY: y - this.state.game3.noteBounds.width / 2,
         cssDestX: Math.random() >= 0.5 ? "-20%" : "110%",
         cssDestY: Math.random() * 100 + "%",
         scale: 0.3,
@@ -199,12 +236,36 @@ class Game3Page extends GamePage {
       });
     }
 
+    if (!isObject && tapCounter % this.state.game3.objectCreateCount === 0) {
+      let source =
+        this.state.game3.objSources[
+          Math.floor(this.state.game3.objSources.length * Math.random())
+        ];
+      objects.push({
+        id: "obj" + this.counter++,
+        cssX: x - source.w / 2,
+        cssY: y - source.h / 2,
+        cssDestX:
+          Math.random() >= 0.5
+            ? this.props.bounds.mobileSize
+              ? "-40%"
+              : "-20%"
+            : "110%",
+        cssDestY: Math.random() * 100 + "%",
+        scale: this.props.bounds.mobileSize ? 0.3 : 0.5,
+        rotate: 0,
+        status: "obj-on",
+        ...source,
+      });
+    }
+
     this.setState({
       ...this.state,
       taps,
       notes,
+      objects,
       tapCounter,
-      tapAdded: true,
+      tapAdded: !isObject,
       stripesAmount,
       bonuses,
       score,
@@ -213,7 +274,7 @@ class Game3Page extends GamePage {
   }
 
   render() {
-    let objs = [];
+    let objects = [];
     let bonuses = [];
     let taps = [];
     let notes = [];
@@ -287,27 +348,34 @@ class Game3Page extends GamePage {
       );
     }
 
+    for (let i = 0; i < this.state.objects.length; i++) {
+      let obj = this.state.objects[i];
+      objects.push(
+        <div
+          key={obj.id}
+          id={obj.id}
+          className="object"
+          style={{
+            left: obj.cssX,
+            top: obj.cssY,
+            width: obj.w,
+            height: obj.h,
+            backgroundImage: "url(" + obj.src + ")",
+            transform: "scale(" + obj.scale + ") rotate(" + obj.rotate + "deg)",
+          }}
+          onPointerDown={this.can_clickHandler}
+        ></div>,
+      );
+    }
+
     for (let i = 0; i < this.state.bonuses.length; i++) {
       let bonus = this.state.bonuses[i];
-      let particles = [];
-      if (bonus.value > 0) {
-        for (let j = 0; j < this.state.game1.particlesCount; j++) {
-          particles.push(<div key={"p" + j} className="bonus-particle"></div>);
-        }
-      }
       bonuses.push(
         <div key={bonus.id}>
           <div
-            className="bonus-particle-container"
-            style={{
-              left: bonus.cssX,
-              top: bonus.cssY,
-            }}
-          >
-            {particles}
-          </div>
-          <div
-            className="bonus-box bonusUp display"
+            className={
+              "bonus-box bonusUp display" + (bonus.delay ? " delay500ms" : "")
+            }
             id={bonus.id}
             style={{
               left: bonus.cssX,
@@ -344,6 +412,7 @@ class Game3Page extends GamePage {
           <div className="pageBg slow-pulsing"></div>
           {stripes}
           {notes}
+          {objects}
           <div
             className={
               "can can" +
@@ -352,7 +421,6 @@ class Game3Page extends GamePage {
             }
             onPointerDown={this.can_clickHandler}
           ></div>
-          {objs}
           {taps}
           {bonuses}
         </div>

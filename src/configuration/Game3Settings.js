@@ -31,10 +31,69 @@ const Game3Settings = {
 
   objSources: [
     {
-      id: "o1",
-      x: 113,
-      y: 224,
+      w: 71,
+      h: 87,
       src: require("../images/game3/objects/o1.png"),
+    },
+    {
+      w: 89,
+      h: 66,
+      src: require("../images/game3/objects/o2.png"),
+    },
+    {
+      w: 55,
+      h: 88,
+      src: require("../images/game3/objects/o3.png"),
+    },
+    {
+      w: 90,
+      h: 49,
+      src: require("../images/game3/objects/o4.png"),
+    },
+    {
+      w: 88,
+      h: 104,
+      src: require("../images/game3/objects/o5.png"),
+    },
+    {
+      w: 111,
+      h: 80,
+      src: require("../images/game3/objects/o6.png"),
+    },
+    {
+      w: 79,
+      h: 52,
+      src: require("../images/game3/objects/o7.png"),
+    },
+    {
+      w: 105,
+      h: 82,
+      src: require("../images/game3/objects/o8.png"),
+    },
+    {
+      w: 71,
+      h: 85,
+      src: require("../images/game3/objects/o9.png"),
+    },
+    {
+      w: 68,
+      h: 89,
+      src: require("../images/game3/objects/o10.png"),
+    },
+    {
+      w: 74,
+      h: 75,
+      src: require("../images/game3/objects/o11.png"),
+    },
+    {
+      w: 103,
+      h: 50,
+      src: require("../images/game3/objects/o12.png"),
+    },
+    {
+      w: 66,
+      h: 82,
+      src: require("../images/game3/objects/o13.png"),
     },
   ],
 
@@ -52,15 +111,22 @@ const Game3Settings = {
   finishingDuration: 5000, //ms
   animationDuration: 4000, //ms
 
-  bonusLife: 3,
-  tapLife: 3,
-  noteLife: 10,
   mobileScale: 1,
   tapSize: 42,
   tapThrottlingDelay: 150,
-  tapBonusCount: 2,
-  noteCreateCount: 2,
-  bonusValue: 1,
+
+  bonusLife: 3,
+  tapLife: 3,
+  noteLife: 10,
+  objectLife: 30,
+
+  tapBonusCount: 20,
+  noteCreateCount: 5,
+  stripeAddCount: 15,
+  objectCreateCount: 20,
+
+  bonusValue: 10,
+  objectBonusValue: 2,
 };
 
 export default Game3Settings;
