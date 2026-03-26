@@ -25,8 +25,8 @@ $s: 700px;
       height: $finalSize;
       border-radius: $finalSize;
       transform: translate(random($s) * 1px - $s/2, random($s) * 1px - $s/2);
-      // background: hsl(random(360), 100%, 100%);
-      background-image: url("../images/game4/spark.png");
+      background: hsl(random(360), 100%, 100%);
+
       background-size: contain;
       animation-duration: $t;
       animation-delay: 0.01 * random(100) * $t;

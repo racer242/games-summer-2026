@@ -1,6 +1,5 @@
 import React from "react";
 import "../css/game2.css";
-import "../css/lights.scss";
 import GamePage from "./GamePage";
 import CircularProgress from "../components/CircularProgress";
 

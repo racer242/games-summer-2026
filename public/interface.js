@@ -10,7 +10,7 @@
 // Установить название игры.
 // Просто переменная - используется внутри этого файла для удобства,
 // передается ниже в конфигурацию, сама на приложение не влияет
-window.gameId = "TAP"; //"VIBE"; //"SNOWBALL"; //"TAP"; //"SECRET";
+window.gameId = "DJ"; //"VIBE"; //"DJ"; //"TAP";
 
 // Указать, авторизован пользователь или нет
 // Просто переменная - используется внутри этого файла для удобства,
@@ -47,12 +47,39 @@ window.playWithoutConfirmation = function () {
   console.log("playWithoutConfirmation");
 };
 
+// Также функция для использования внутри этого файла, заглушка
+// Имитирует запуск игры
+window.onGameStart = function () {
+  console.log("onGameStart");
+};
+
+// Также функция для использования внутри этого файла, заглушка
+// Имитирует окончание игры
+window.onGameFinish = function () {
+  console.log("onGameFinish");
+};
+
 /**
  * Возвращает корневой элемент для рендеринга приложения
  */
 window.getAppRoot = function () {
   return document.getElementById("game");
 };
+
+/**
+ * Функция активизации приложения (создается при инициализации приложения)
+ */
+window.activateGameApp = null;
+
+/**
+ * Функция деактивизации приложения (создается при инициализации приложения)
+ */
+window.deactivateGameApp = null;
+
+/**
+ * Функция рестарта приложения (создается при инициализации приложения)
+ */
+window.restartGameApp = null;
 
 // Функция инициализации приложения. Вызывается из обработчика в Index.html,
 // см. <div id="root" class="game" oninit="onAppReadyHandler">
@@ -100,7 +127,7 @@ function onAppReadyHandler(app) {
         request2: { url: "/api/TentGame2.json", method: "GET" },
       },
       2: {
-        id: "SNOWBALL",
+        id: "DJ",
         // request1: { url: "/api/TentGame", method: "POST" },
         request1: { url: "/api/TentGame1.json", method: "GET" },
         // request2: { url: "/api/TentGame", method: "POST" },
@@ -113,17 +140,9 @@ function onAppReadyHandler(app) {
         // request2: { url: "/api/TentGame", method: "POST" },
         request2: { url: "/api/TentGame2.json", method: "GET" },
       },
-      4: {
-        id: "SECRET",
-        // request0: { url: "/api/TentGame", method: "POST" },
-        request0: { url: "/api/SecretGame0.json", method: "GET" },
-        // request1: { url: "/api/TentGame", method: "POST" },
-        request1: { url: "/api/SecretGame1.json", method: "GET" },
-        // request2: { url: "/api/TentGame", method: "POST" },
-        request2: { url: "/api/SecretGame2.json", method: "GET" },
-      },
+
       // Это индекс игр для быстрой идентификации внутри приложения
-      index: { VIBE: 1, SNOWBALL: 2, TAP: 3, SECRET: 4 },
+      index: { VIBE: 1, DJ: 2, TAP: 3 },
     },
     // Обработчик закрытия попапа
     closeHandler: window.closeGamePopup,
@@ -139,6 +158,8 @@ function onAppReadyHandler(app) {
     userNotAuthorized: !window.userAuthorized,
     // Указать, действует ли еще акция или нет
     activityIsOver: window.activityIsOver,
+    gameStartHandler: window.onGameStart,
+    gameFinishHandler: window.onGameFinish,
   };
 
   // Передается номер текущей игры (внутри приложения игры идентифицируются по номерам)

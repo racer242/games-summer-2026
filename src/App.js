@@ -27,11 +27,10 @@ import "./css/circularProgress.scss";
 import Game2Settings from "./configuration/Game2Settings";
 import Game1Settings from "./configuration/Game1Settings";
 import Game3Settings from "./configuration/Game3Settings";
-import Game4Settings from "./configuration/Game4Settings";
 
 const Store = createStore(
   mainReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
 class App extends Component {
@@ -70,8 +69,7 @@ class App extends Component {
         game1: Game1Settings,
         game2: Game2Settings,
         game3: Game3Settings,
-        game4: Game4Settings,
-      })
+      }),
     );
 
     this.props.onInit(this);

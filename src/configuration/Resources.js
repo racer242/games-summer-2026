@@ -113,10 +113,6 @@ const resources = {
     require("../images/game3/rays/r5.png"),
     require("../images/game3/rays/r6.png"),
   ],
-  4: [
-    ...common,
-    // require("../images/game4/back-snowflake.png"),
-  ],
 };
 
 export default resources;
