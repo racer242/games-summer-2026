@@ -65,7 +65,7 @@ class GamePage extends Component {
           request: this.state.gameData.request1,
           data: { mode: "start", tentCode: this.state.gameData.id },
         },
-      })
+      }),
     );
   }
 
@@ -86,7 +86,7 @@ class GamePage extends Component {
             marks,
           },
         },
-      })
+      }),
     );
   }
 
@@ -124,7 +124,7 @@ class GamePage extends Component {
       // if (this.initCount > 1) {
       this.gameTimer = setTimeout(
         this.stepGame.bind(this),
-        this.state.stepDuration
+        this.state.stepDuration,
       );
       // } else {
       //   this.initCount++;
@@ -158,7 +158,7 @@ class GamePage extends Component {
           setStoreData({
             currentPage: "finish",
             gameScore: this.state.score,
-          })
+          }),
         );
       }, this.state.stopDuration / 2);
     }, this.state.stopDuration / 2);
@@ -171,10 +171,12 @@ class GamePage extends Component {
       return false;
     }
     this.countdown++;
-    this.setState({
-      ...this.state,
-      countdown: this.countdown,
-    });
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        countdown: this.countdown,
+      });
+    }, 0);
     return true;
   }
 

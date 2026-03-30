@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { setStoreData } from "../actions/appActions";
+import "../css/content2.css";
 
 class Main2Page extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Main2Page extends Component {
     this.store.dispatch(
       setStoreData({
         currentPage: "game",
-      })
+      }),
     );
   }
 
@@ -35,25 +36,45 @@ class Main2Page extends Component {
     children.push(this.props.children);
 
     return (
-      <div className="mainPage g2">
-        <div className="pageBg slow-pulsing"></div>
+      <div className="mainPage common g2">
+        <div className="pageBg">
+          <div className="djDisk djDiskLeft spin"></div>
+          <div className="djDisk djDiskRight spin"></div>
+          <div className="djDiskCap djDiskLeft"></div>
+          <div className="djDiskCap djDiskRight"></div>
+          <div className="buttonMatrix">
+            {[...Array(4 * 4)].map((_, i) => (
+              <div
+                key={i}
+                className="buttonRect"
+                style={{
+                  "--row": Math.floor(i / 4),
+                  "--col": i % 4,
+                  "--dist-center": Math.max(
+                    Math.abs(Math.floor(i / 4) - 1.5),
+                    Math.abs((i % 4) - 1.5),
+                  ),
+                }}
+              ></div>
+            ))}
+          </div>
+        </div>
         <div className="head appear-zoom">
-          <div className="logo-bg logo-bg-pulsing"></div>
-          <div className="logo-snow-left"></div>
-          <div className="logo-snow-right"></div>
+          <div className="logo-bg breathing"></div>
+          <div className="logo-item spin"></div>
           <div className="logo floating"></div>
-          <h1 className="caps">Снежки</h1>
+          <h1 className="caps">Диджей, зажигай</h1>
         </div>
         <div className="plate appear-top delay500ms">
+          <h3>
+            Стань диджеем, зажги танцпол, повтори последовательность на сэмплере
+            и набирай очки.
+          </h3>
           <p>
-            Играй в&nbsp;снежки с&nbsp;жителями Лосьвилля! Внимательно наблюдай
-            за&nbsp;поляной, ведь лосики очень любят играть и прятаться, они
-            всегда появляются неожиданно!
-          </p>
-          <p className="orange">
-            Лосики будут появляться на&nbsp;экране, а&nbsp;ты&nbsp;–&nbsp;успей
-            попасть в&nbsp;них снежком. Игра длится 60&nbsp;секунд,
-            за&nbsp;каждое удачное попадание начисляется +1&nbsp;балл
+            Повтори все последовательности из 6-ти загорающихся кнопок как можно
+            быстрее, сколько секунд останется из {this.state.game3.gameDuration}{" "}
+            - столько получишь очков. Время игры –{" "}
+            {this.state.game3.gameDuration} секунд.
           </p>
         </div>
         <div

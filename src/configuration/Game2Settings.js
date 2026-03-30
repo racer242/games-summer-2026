@@ -1,40 +1,42 @@
 import { isMobile, isLocal } from "../core/helpers";
 
 const Game2Settings = {
-  bonusBounds: {
-    width: 100,
-    height: 100,
-  },
-
-  lifeCount: 30,
-  minLifeCountFactor: 0.5,
-  deadCount: 0,
-  switchCount: 0,
-  killCount: 0,
-  killingCount: 10,
-
-  bonusLife: 20,
-
-  showballThrowSize: 300,
-  showballSize: 50,
-  showballDistanceFactor: 2.2,
-  showballShortDistance: 450,
-  showballShortDurationFactor: 1.8,
-  showballMinDuration: 250,
-  showballExplodeDuration: 800,
-  showburstDistanceFactor: 1.7,
-  showburstDuration: 500,
-  snowParticlesCount: 30,
-
   transitionDuration: 500, //ms
-  showDurationFactor: 2,
-  killDurationFactor: 0.5,
 
-  stepDuration: 50, //ms
-  gameDuration: 60, //ms
+  stepDuration: 100, //ms
+  gameDuration: 960, //ms
   stopDuration: 2000, //ms
 
-  mobileScale: 0.96,
+  roundCount: 5,
+
+  startCountdownCount: 3,
+  initStageCount: 2,
+  countdownStepCount: 7,
+  rememberStepCount: 7,
+
+  cardSources: [
+    require("../images/game2/cards/card1.png"),
+    require("../images/game2/cards/card2.png"),
+    require("../images/game2/cards/card3.png"),
+    require("../images/game2/cards/card4.png"),
+    require("../images/game2/cards/card5.png"),
+    require("../images/game2/cards/card6.png"),
+    require("../images/game2/cards/card7.png"),
+    require("../images/game2/cards/card8.png"),
+    require("../images/game2/cards/card9.png"),
+    require("../images/game2/cards/card10.png"),
+    require("../images/game2/cards/card11.png"),
+    require("../images/game2/cards/card12.png"),
+    require("../images/game2/cards/card13.png"),
+    require("../images/game2/cards/card14.png"),
+    require("../images/game2/cards/card15.png"),
+    require("../images/game2/cards/card16.png"),
+  ],
+
+  matrix: { x: 4, y: 4 },
+  cardBounds: { w: 70, h: 70 },
+  cardGap: 21.5,
+  sequenceLength: 5,
 };
 
 export default Game2Settings;

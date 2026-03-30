@@ -1,5 +1,5 @@
-.primary-button,
-.secondary-button {
+.game .primary-button,
+.game .secondary-button {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -22,67 +22,67 @@
   box-sizing: border-box;
 }
 
-.primary-button:hover {
+.game .primary-button:hover {
   background: #ff49b8;
 }
 
-.primary-button:active {
+.game .primary-button:active {
   color: #fff;
   background: #ff49b8;
 }
 
-.primary-button:disabled {
+.game .primary-button:disabled {
   color: #ddd;
   background: #eee;
   cursor: default;
 }
 
-.secondary-button {
+.game .secondary-button {
   color: #fff;
   background: #5d279e;
 }
 
-.secondary-button:hover {
+.game .secondary-button:hover {
   color: #fff;
   background: #8200cc;
 }
-.secondary-button:active {
+.game .secondary-button:active {
   color: #fff;
   background: #ff49b8;
 }
 
-.secondary-button:disabled {
+.game .secondary-button:disabled {
   color: #ddd;
   background: #eee;
   cursor: default;
 }
 
-.primary-button.small,
-.secondary-button.small {
+.game .primary-button.small,
+.game .secondary-button.small {
   padding: 18px 25px !important;
 }
 
-.primary-button.inverted {
+.game .primary-button.inverted {
   background: #ff49b8;
   color: #fff !important;
 }
 
-.button-large {
+.game .button-large {
   padding: 16px 28px;
 }
 
-.mobile .button-large {
+.game .mobile .button-large {
   padding: 16px 20px;
 }
 
-.button-mobile-adaptive {
+.game .button-mobile-adaptive {
 }
 
-.mobile .button-mobile-adaptive {
+.game .mobile .button-mobile-adaptive {
   width: 100%;
 }
 
-.button-group {
+.game .button-group {
   position: relative;
   display: flex;
   width: 100%;
@@ -94,14 +94,14 @@
   box-sizing: border-box;
 }
 
-.mobile .button-group {
+.game .mobile .button-group {
   width: auto;
   flex-direction: column;
   flex-direction: column-reverse;
   gap: 14px;
 }
 
-.g-checkbox {
+.game .g-checkbox {
   position: relative;
   display: flex;
   flex-direction: row;

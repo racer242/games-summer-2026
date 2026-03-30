@@ -54,6 +54,10 @@
 .g1 .pageBg {
   background-image: url(../images/game1/bg.jpg);
 }
+.g2 .pageBg {
+  background-image: url(../images/game2/bg.jpg);
+}
+
 .g3 .pageBg {
   background-image: url(../images/game3/bg.jpg);
 }
@@ -61,6 +65,10 @@
 .mobile .g1 .pageBg {
   background-image: url(../images/game1/bg-mob.jpg);
 }
+.mobile .g2 .pageBg {
+  background-image: url(../images/game2/bg-mob.jpg);
+}
+
 .mobile .g3 .pageBg {
   background-image: url(../images/game3/bg-mob.jpg);
 }
@@ -69,6 +77,12 @@
   background-image: url(../images/game1/bg-common.jpg);
   background-size: cover;
 }
+.g2.common .pageBg {
+  background-image: url(../images/game2/bg.jpg);
+  filter: blur(16px);
+  background-size: cover;
+}
+
 .g3.common .pageBg {
   background-image: url(../images/game3/bg-common.jpg);
   background-size: cover;
@@ -76,6 +90,10 @@
 
 .mobile .g1.common .pageBg {
   background-image: url(../images/game1/bg-common-mob.jpg);
+}
+.mobile .g2.common .pageBg {
+  background-image: url(../images/game2/bg-mob.jpg);
+  filter: blur(16px);
 }
 .mobile .g3.common .pageBg {
   background-image: url(../images/game3/bg-common-mob.jpg);
@@ -122,6 +140,10 @@
 .g1 .logo {
   background-image: url(../images/game1/logo.png);
 }
+.g2 .logo {
+  background-image: url(../images/game2/logo.png);
+}
+
 .g3 .logo {
   background-image: url(../images/game3/logo.png);
 }
@@ -143,6 +165,10 @@
 .g1 .logo-bg {
   background-image: url(../images/game1/title-bg.svg);
 }
+.g2 .logo-bg {
+  background-image: url(../images/game2/title-bg.svg);
+}
+
 .g3 .logo-bg {
   background-image: url(../images/game3/title-bg.svg);
 }
@@ -163,6 +189,9 @@
 
 .g1 .logo-item {
   background-image: url(../images/game1/title-item.svg);
+}
+.g2 .logo-item {
+  background-image: url(../images/game2/title-item.svg);
 }
 .g3 .logo-item {
   background-image: url(../images/game3/title-item.svg);
@@ -485,23 +514,23 @@
 }
 
 .white {
-  color: #fff;
+  color: #fff !important;
 }
 
 .black {
-  color: #222221;
+  color: #222221 !important;
 }
 
 .orange {
-  color: #f79c8a;
+  color: #f79c8a !important;
 }
 
 .yellow {
-  color: #ffd100;
+  color: #ffd100 !important;
 }
 
 .pink {
-  color: #ea49ff;
+  color: #ea49ff !important;
 }
 
 .yellow-plate,

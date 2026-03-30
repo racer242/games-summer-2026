@@ -1,0 +1,855 @@
+.djDisk {
+  position: absolute;
+  width: 348px;
+  height: 348px;
+  top: 96px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../images/game2/circle-dj-color.png);
+}
+
+.djDisk.djDiskLeft {
+  left: -194px;
+}
+
+.mobile .djDisk.djDiskLeft {
+  display: none;
+}
+
+.djDisk.djDiskRight {
+  right: -194px;
+}
+
+.mobile .djDisk.djDiskRight {
+  width: 246px;
+  height: 246px;
+  left: 32px;
+  top: 399px;
+}
+
+.djDiskCap {
+  position: absolute;
+  width: 45px;
+  height: 130px;
+  top: 202px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.djDiskCap.djDiskLeft {
+  left: 0px;
+  background-image: url(../images/game2/circle-left.png);
+}
+
+.mobile .djDiskCap.djDiskLeft {
+  display: none;
+}
+
+.djDiskCap.djDiskRight {
+  right: 0px;
+  background-image: url(../images/game2/circle-right.png);
+}
+
+.mobile .djDiskCap.djDiskRight {
+  width: 48px;
+  height: 95px;
+  left: 132px;
+  top: 445px;
+  transform: rotate(90deg);
+}
+
+.buttonMatrix {
+  position: absolute;
+  width: calc(73px * 4);
+  height: calc(73px * 4);
+  left: 302px;
+  top: 92px;
+  display: grid;
+  grid-template-columns: repeat(4, 73px);
+  grid-template-rows: repeat(4, 73px);
+  row-gap: 18.5px;
+  column-gap: 18.5px;
+}
+
+.mobile .buttonMatrix {
+  left: -7px;
+  top: 26px;
+  transform: scale(0.641);
+}
+.buttonRect {
+  width: 82px;
+  height: 82px;
+  pointer-events: none;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../images/game2/button-rect.png);
+  mix-blend-mode: plus-lighter;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.buttonRect:nth-child(1) {
+  animation-name: c1;
+}
+.buttonRect:nth-child(2) {
+  animation-name: c2;
+}
+.buttonRect:nth-child(3) {
+  animation-name: c3;
+}
+.buttonRect:nth-child(4) {
+  animation-name: c4;
+}
+.buttonRect:nth-child(5) {
+  animation-name: c5;
+}
+.buttonRect:nth-child(6) {
+  animation-name: c6;
+}
+.buttonRect:nth-child(7) {
+  animation-name: c7;
+}
+.buttonRect:nth-child(8) {
+  animation-name: c8;
+}
+.buttonRect:nth-child(9) {
+  animation-name: c9;
+}
+.buttonRect:nth-child(10) {
+  animation-name: c10;
+}
+.buttonRect:nth-child(11) {
+  animation-name: c11;
+}
+.buttonRect:nth-child(12) {
+  animation-name: c12;
+}
+.buttonRect:nth-child(13) {
+  animation-name: c13;
+}
+.buttonRect:nth-child(14) {
+  animation-name: c14;
+}
+.buttonRect:nth-child(15) {
+  animation-name: c15;
+}
+.buttonRect:nth-child(16) {
+  animation-name: c16;
+}
+
+/* ════════════════════════════════════════════════════
+   ТАЙМИНГ  (20 подшагов × 5% = 100%)
+
+   Фаза 1  ↓  R1: 0–5    R2: 5–10   R3: 10–15  R4: 15–20
+   Фаза 2  ↑  R4: 20–25  R3: 25–30  R2: 30–35  R1: 35–40
+   Фаза 3  →  C1: 40–45  C2: 45–50  C3: 50–55  C4: 55–60
+   Фаза 4  ←  C4: 60–65  C3: 65–70  C2: 70–75  C1: 75–80
+   Фаза 5  ◎  outer: 80–85   inner: 85–90
+   Фаза 6  ◉  inner: 90–95   outer: 95–100
+
+   Сетка:
+    1(R1,C1,O)   2(R1,C2,O)   3(R1,C3,O)   4(R1,C4,O)
+    5(R2,C1,O)   6(R2,C2,I)   7(R2,C3,I)   8(R2,C4,O)
+    9(R3,C1,O)  10(R3,C2,I)  11(R3,C3,I)  12(R3,C4,O)
+   13(R4,C1,O)  14(R4,C2,O)  15(R4,C3,O)  16(R4,C4,O)
+   ════════════════════════════════════════════════════ */
+
+/* Cell 1  R1 C1 Outer  │  ON: 0–5, 35–45*, 75–85*, 95–100 */
+@keyframes c1 {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  5.5%,
+  34.5% {
+    opacity: 0.07;
+  }
+  35%,
+  45% {
+    opacity: 1;
+  }
+  45.5%,
+  74.5% {
+    opacity: 0.07;
+  }
+  75%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 2  R1 C2 Outer  │  ON: 0–5, 35–40, 45–50, 70–75, 80–85, 95–100 */
+@keyframes c2 {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  5.5%,
+  34.5% {
+    opacity: 0.07;
+  }
+  35%,
+  40% {
+    opacity: 1;
+  }
+  40.5%,
+  44.5% {
+    opacity: 0.07;
+  }
+  45%,
+  50% {
+    opacity: 1;
+  }
+  50.5%,
+  69.5% {
+    opacity: 0.07;
+  }
+  70%,
+  75% {
+    opacity: 1;
+  }
+  75.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 3  R1 C3 Outer  │  ON: 0–5, 35–40, 50–55, 65–70, 80–85, 95–100 */
+@keyframes c3 {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  5.5%,
+  34.5% {
+    opacity: 0.07;
+  }
+  35%,
+  40% {
+    opacity: 1;
+  }
+  40.5%,
+  49.5% {
+    opacity: 0.07;
+  }
+  50%,
+  55% {
+    opacity: 1;
+  }
+  55.5%,
+  64.5% {
+    opacity: 0.07;
+  }
+  65%,
+  70% {
+    opacity: 1;
+  }
+  70.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 4  R1 C4 Outer  │  ON: 0–5, 35–40, 55–65*, 80–85, 95–100 */
+@keyframes c4 {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  5.5%,
+  34.5% {
+    opacity: 0.07;
+  }
+  35%,
+  40% {
+    opacity: 1;
+  }
+  40.5%,
+  54.5% {
+    opacity: 0.07;
+  }
+  55%,
+  65% {
+    opacity: 1;
+  }
+  65.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 5  R2 C1 Outer  │  ON: 5–10, 30–35, 40–45, 75–85*, 95–100 */
+@keyframes c5 {
+  0%,
+  4.5% {
+    opacity: 0.07;
+  }
+  5%,
+  10% {
+    opacity: 1;
+  }
+  10.5%,
+  29.5% {
+    opacity: 0.07;
+  }
+  30%,
+  35% {
+    opacity: 1;
+  }
+  35.5%,
+  39.5% {
+    opacity: 0.07;
+  }
+  40%,
+  45% {
+    opacity: 1;
+  }
+  45.5%,
+  74.5% {
+    opacity: 0.07;
+  }
+  75%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 6  R2 C2 Inner  │  ON: 5–10, 30–35, 45–50, 70–75, 85–95* */
+@keyframes c6 {
+  0%,
+  4.5% {
+    opacity: 0.07;
+  }
+  5%,
+  10% {
+    opacity: 1;
+  }
+  10.5%,
+  29.5% {
+    opacity: 0.07;
+  }
+  30%,
+  35% {
+    opacity: 1;
+  }
+  35.5%,
+  44.5% {
+    opacity: 0.07;
+  }
+  45%,
+  50% {
+    opacity: 1;
+  }
+  50.5%,
+  69.5% {
+    opacity: 0.07;
+  }
+  70%,
+  75% {
+    opacity: 1;
+  }
+  75.5%,
+  84.5% {
+    opacity: 0.07;
+  }
+  85%,
+  95% {
+    opacity: 1;
+  }
+  95.5%,
+  100% {
+    opacity: 0.07;
+  }
+}
+
+/* Cell 7  R2 C3 Inner  │  ON: 5–10, 30–35, 50–55, 65–70, 85–95* */
+@keyframes c7 {
+  0%,
+  4.5% {
+    opacity: 0.07;
+  }
+  5%,
+  10% {
+    opacity: 1;
+  }
+  10.5%,
+  29.5% {
+    opacity: 0.07;
+  }
+  30%,
+  35% {
+    opacity: 1;
+  }
+  35.5%,
+  49.5% {
+    opacity: 0.07;
+  }
+  50%,
+  55% {
+    opacity: 1;
+  }
+  55.5%,
+  64.5% {
+    opacity: 0.07;
+  }
+  65%,
+  70% {
+    opacity: 1;
+  }
+  70.5%,
+  84.5% {
+    opacity: 0.07;
+  }
+  85%,
+  95% {
+    opacity: 1;
+  }
+  95.5%,
+  100% {
+    opacity: 0.07;
+  }
+}
+
+/* Cell 8  R2 C4 Outer  │  ON: 5–10, 30–35, 55–65*, 80–85, 95–100 */
+@keyframes c8 {
+  0%,
+  4.5% {
+    opacity: 0.07;
+  }
+  5%,
+  10% {
+    opacity: 1;
+  }
+  10.5%,
+  29.5% {
+    opacity: 0.07;
+  }
+  30%,
+  35% {
+    opacity: 1;
+  }
+  35.5%,
+  54.5% {
+    opacity: 0.07;
+  }
+  55%,
+  65% {
+    opacity: 1;
+  }
+  65.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 9  R3 C1 Outer  │  ON: 10–15, 25–30, 40–45, 75–85*, 95–100 */
+@keyframes c9 {
+  0%,
+  9.5% {
+    opacity: 0.07;
+  }
+  10%,
+  15% {
+    opacity: 1;
+  }
+  15.5%,
+  24.5% {
+    opacity: 0.07;
+  }
+  25%,
+  30% {
+    opacity: 1;
+  }
+  30.5%,
+  39.5% {
+    opacity: 0.07;
+  }
+  40%,
+  45% {
+    opacity: 1;
+  }
+  45.5%,
+  74.5% {
+    opacity: 0.07;
+  }
+  75%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 10  R3 C2 Inner  │  ON: 10–15, 25–30, 45–50, 70–75, 85–95* */
+@keyframes c10 {
+  0%,
+  9.5% {
+    opacity: 0.07;
+  }
+  10%,
+  15% {
+    opacity: 1;
+  }
+  15.5%,
+  24.5% {
+    opacity: 0.07;
+  }
+  25%,
+  30% {
+    opacity: 1;
+  }
+  30.5%,
+  44.5% {
+    opacity: 0.07;
+  }
+  45%,
+  50% {
+    opacity: 1;
+  }
+  50.5%,
+  69.5% {
+    opacity: 0.07;
+  }
+  70%,
+  75% {
+    opacity: 1;
+  }
+  75.5%,
+  84.5% {
+    opacity: 0.07;
+  }
+  85%,
+  95% {
+    opacity: 1;
+  }
+  95.5%,
+  100% {
+    opacity: 0.07;
+  }
+}
+
+/* Cell 11  R3 C3 Inner  │  ON: 10–15, 25–30, 50–55, 65–70, 85–95* */
+@keyframes c11 {
+  0%,
+  9.5% {
+    opacity: 0.07;
+  }
+  10%,
+  15% {
+    opacity: 1;
+  }
+  15.5%,
+  24.5% {
+    opacity: 0.07;
+  }
+  25%,
+  30% {
+    opacity: 1;
+  }
+  30.5%,
+  49.5% {
+    opacity: 0.07;
+  }
+  50%,
+  55% {
+    opacity: 1;
+  }
+  55.5%,
+  64.5% {
+    opacity: 0.07;
+  }
+  65%,
+  70% {
+    opacity: 1;
+  }
+  70.5%,
+  84.5% {
+    opacity: 0.07;
+  }
+  85%,
+  95% {
+    opacity: 1;
+  }
+  95.5%,
+  100% {
+    opacity: 0.07;
+  }
+}
+
+/* Cell 12  R3 C4 Outer  │  ON: 10–15, 25–30, 55–65*, 80–85, 95–100 */
+@keyframes c12 {
+  0%,
+  9.5% {
+    opacity: 0.07;
+  }
+  10%,
+  15% {
+    opacity: 1;
+  }
+  15.5%,
+  24.5% {
+    opacity: 0.07;
+  }
+  25%,
+  30% {
+    opacity: 1;
+  }
+  30.5%,
+  54.5% {
+    opacity: 0.07;
+  }
+  55%,
+  65% {
+    opacity: 1;
+  }
+  65.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 13  R4 C1 Outer  │  ON: 15–25*, 40–45, 75–85*, 95–100 */
+@keyframes c13 {
+  0%,
+  14.5% {
+    opacity: 0.07;
+  }
+  15%,
+  25% {
+    opacity: 1;
+  }
+  25.5%,
+  39.5% {
+    opacity: 0.07;
+  }
+  40%,
+  45% {
+    opacity: 1;
+  }
+  45.5%,
+  74.5% {
+    opacity: 0.07;
+  }
+  75%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 14  R4 C2 Outer  │  ON: 15–25*, 45–50, 70–75, 80–85, 95–100 */
+@keyframes c14 {
+  0%,
+  14.5% {
+    opacity: 0.07;
+  }
+  15%,
+  25% {
+    opacity: 1;
+  }
+  25.5%,
+  44.5% {
+    opacity: 0.07;
+  }
+  45%,
+  50% {
+    opacity: 1;
+  }
+  50.5%,
+  69.5% {
+    opacity: 0.07;
+  }
+  70%,
+  75% {
+    opacity: 1;
+  }
+  75.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 15  R4 C3 Outer  │  ON: 15–25*, 50–55, 65–70, 80–85, 95–100 */
+@keyframes c15 {
+  0%,
+  14.5% {
+    opacity: 0.07;
+  }
+  15%,
+  25% {
+    opacity: 1;
+  }
+  25.5%,
+  49.5% {
+    opacity: 0.07;
+  }
+  50%,
+  55% {
+    opacity: 1;
+  }
+  55.5%,
+  64.5% {
+    opacity: 0.07;
+  }
+  65%,
+  70% {
+    opacity: 1;
+  }
+  70.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Cell 16  R4 C4 Outer  │  ON: 15–25*, 55–65*, 80–85, 95–100 */
+@keyframes c16 {
+  0%,
+  14.5% {
+    opacity: 0.07;
+  }
+  15%,
+  25% {
+    opacity: 1;
+  }
+  25.5%,
+  54.5% {
+    opacity: 0.07;
+  }
+  55%,
+  65% {
+    opacity: 1;
+  }
+  65.5%,
+  79.5% {
+    opacity: 0.07;
+  }
+  80%,
+  85% {
+    opacity: 1;
+  }
+  85.5%,
+  94.5% {
+    opacity: 0.07;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
