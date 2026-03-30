@@ -4,15 +4,15 @@ const Game2Settings = {
   transitionDuration: 500, //ms
 
   stepDuration: 100, //ms
-  gameDuration: 960, //ms
-  stopDuration: 2000, //ms
-
-  roundCount: 5,
+  gameDuration: 60, //ms
+  stopDuration: 1000, //ms
 
   startCountdownCount: 3,
   initStageCount: 2,
   countdownStepCount: 7,
   rememberStepCount: 7,
+  resultCount: 3,
+  finalCount: 20,
 
   cardSources: [
     require("../images/game2/cards/card1.png"),
@@ -36,7 +36,11 @@ const Game2Settings = {
   matrix: { x: 4, y: 4 },
   cardBounds: { w: 70, h: 70 },
   cardGap: 21.5,
-  sequenceLength: 5,
+
+  sequenceLength: 2,
+  roundCount: 2,
+
+  cardParticlesCount: 20,
 };
 
 export default Game2Settings;

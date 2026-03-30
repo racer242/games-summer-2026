@@ -71,6 +71,7 @@
   grid-template-rows: repeat(4, 73px);
   row-gap: 18.5px;
   column-gap: 18.5px;
+  transition: opacity 1s;
 }
 
 .mobile .buttonMatrix {

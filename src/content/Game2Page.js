@@ -2,6 +2,7 @@ import React from "react";
 import "../css/game2.css";
 import GamePage from "./GamePage";
 import CircularProgress from "../components/CircularProgress";
+import "../css/card-particles.scss";
 
 class Game2Page extends GamePage {
   constructor(props) {
@@ -10,8 +11,6 @@ class Game2Page extends GamePage {
 
     this.state = {
       ...this.state,
-      matrix: [],
-      sequence: [],
       gameDuration: this.state.game2.gameDuration,
       stopDuration: this.state.game2.stopDuration,
       stepDuration: this.state.game2.stepDuration,
@@ -21,6 +20,10 @@ class Game2Page extends GamePage {
       stage: "init",
       stageCounter: 0,
       restartHint: false,
+      matrix: [],
+      sequence: [],
+      sequenceShow: {},
+      sequenceSelect: {},
       sequenceCounter: -1,
     };
 
@@ -59,6 +62,7 @@ class Game2Page extends GamePage {
       matrix,
       sequence: [],
       sequenceShow: {},
+      sequenceSelect: {},
       sequenceCounter: -1,
     });
   }
@@ -71,6 +75,10 @@ class Game2Page extends GamePage {
     let sequenceCounter = this.state.sequenceCounter;
     let sequence = this.state.sequence;
     let sequenceShow = this.state.sequenceShow;
+    let progress = this.state.progress;
+    let round = this.state.round;
+    let sequenceSelect = this.state.sequenceSelect;
+    let score = this.state.score;
 
     console.log(stage, stageCounter, sequenceCounter);
 
@@ -80,7 +88,9 @@ class Game2Page extends GamePage {
       if (stageCounter > this.state.game2.initStageCount) {
         sequence = [...this.state.matrix].sort(() => Math.random() - 0.5);
         sequenceShow = {};
-
+        progress = 0;
+        sequenceCounter = -1;
+        sequenceSelect = {};
         stage = "start";
         restartHint = true;
         stageCounter = 0;
@@ -107,19 +117,58 @@ class Game2Page extends GamePage {
           let card = sequence[sequenceCounter];
           sequenceShow[card.id] = card;
         } else {
-          sequenceCounter = -1;
+          sequenceCounter = 0;
           sequenceShow = {};
           stageCounter = 0;
+          progress = 0;
           stage = "repeat";
           restartHint = true;
         }
       }
     } else if (stage === "repeat") {
+      restartHint = false;
+    } else if (stage === "result") {
       stageCounter++;
       restartHint = false;
-      if (stageCounter > this.state.game2.rememberStepCount) {
+      if (stageCounter > this.state.game2.resultCount) {
         stageCounter = 0;
+        restartHint = true;
 
+        if (round >= this.state.game2.roundCount - 1) {
+          score = this.state.game2.gameDuration - this.state.countdown;
+          if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
+          this.countdownTimer = null;
+        }
+        stage = "correct";
+        for (let i = 0; i < this.state.game2.sequenceLength; i++) {
+          let selectedCard = this.state.sequenceSelect[sequence[i].id];
+          if (selectedCard && selectedCard.selected === i) {
+          } else {
+            stage = "error";
+            break;
+          }
+        }
+      }
+    } else if (stage === "correct") {
+      stageCounter++;
+      restartHint = false;
+      if (stageCounter > this.state.game2.finalCount) {
+        round++;
+        progress = 0;
+        if (round >= this.state.game2.roundCount) {
+          stage = "close";
+          this.stopGame();
+          this.finishGame();
+        } else {
+          stageCounter = 0;
+          restartHint = true;
+          stage = "init";
+        }
+      }
+    } else if (stage === "error") {
+      stageCounter++;
+      restartHint = false;
+      if (stageCounter > this.state.game2.finalCount) {
         stage = "init";
       }
     }
@@ -133,25 +182,70 @@ class Game2Page extends GamePage {
       sequenceCounter,
       sequenceShow,
       sequence,
+      round,
+      progress,
+      sequenceSelect,
+      score,
     });
     return true;
   }
 
   object_downHandler(event) {
     if (this.state.finished) return;
+
+    let stage = this.state.stage;
+    let sequenceCounter = this.state.sequenceCounter;
+    let sequenceSelect = this.state.sequenceSelect;
+    let progress = this.state.progress;
+    let restartHint = this.state.restartHint;
+
+    let card = this.state.matrix[event.target.id];
+
+    sequenceSelect[card.id] = { ...card, selected: sequenceCounter };
+    sequenceCounter++;
+
+    progress = (sequenceCounter * 100) / this.state.game2.sequenceLength;
+    if (sequenceCounter < this.state.game2.sequenceLength) {
+    } else {
+      stage = "result";
+      restartHint = true;
+    }
+
+    this.setState({
+      ...this.state,
+      stage,
+      sequenceCounter,
+      sequenceSelect,
+      progress,
+      restartHint,
+    });
   }
 
   render() {
     let cards = [];
     for (let i = 0; i < this.state.matrix.length; i++) {
       let card = this.state.matrix[i];
+      let particles = [];
+      for (let j = 0; j < this.state.game2.cardParticlesCount; j++) {
+        particles.push(
+          <div
+            key={"p" + j}
+            className="card-particle"
+            style={{ "--rr": j * 8 + "deg" }}
+          ></div>,
+        );
+      }
       cards.push(
         <div
           className={"gameCard"}
           id={card.i}
           key={card.id}
           style={{
-            opacity: this.state.sequenceShow[card.id] ? 1 : 0.1,
+            opacity:
+              this.state.sequenceShow[card.id] ||
+              this.state.sequenceSelect[card.id]
+                ? 1
+                : 0,
             left:
               card.x *
               (this.state.game2.cardBounds.w + this.state.game2.cardGap),
@@ -163,7 +257,20 @@ class Game2Page extends GamePage {
             pointerEvents: this.state.stage === "repeat" ? "all" : "none",
           }}
           onClick={this.object_downHandler}
-        ></div>,
+        >
+          {(this.state.sequenceShow[card.id] ||
+            this.state.sequenceSelect[card.id]) && (
+            <div
+              className="card-particles-container"
+              style={{
+                left: "50%",
+                top: "50%",
+              }}
+            >
+              {particles}
+            </div>
+          )}
+        </div>,
       );
     }
 
@@ -181,20 +288,14 @@ class Game2Page extends GamePage {
             <div className="djDisk djDiskRight spin"></div>
             <div className="djDiskCap djDiskLeft"></div>
             <div className="djDiskCap djDiskRight"></div>
-            <div className="buttonMatrix">
+            <div
+              className="buttonMatrix"
+              style={{
+                opacity: this.state.stage === "remember" ? 0 : 1,
+              }}
+            >
               {[...Array(4 * 4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="buttonRect"
-                  style={{
-                    "--row": Math.floor(i / 4),
-                    "--col": i % 4,
-                    "--dist-center": Math.max(
-                      Math.abs(Math.floor(i / 4) - 1.5),
-                      Math.abs((i % 4) - 1.5),
-                    ),
-                  }}
-                ></div>
+                <div key={i} className="buttonRect"></div>
               ))}
             </div>
           </div>
@@ -236,7 +337,9 @@ class Game2Page extends GamePage {
         )}
         {(this.state.stage === "start" ||
           this.state.stage === "remember" ||
-          this.state.stage === "repeat") &&
+          this.state.stage === "repeat" ||
+          this.state.stage === "correct" ||
+          this.state.stage === "error") &&
           !this.state.restartHint && (
             <div className="gameHintBox">
               {this.state.stage === "start" && (
