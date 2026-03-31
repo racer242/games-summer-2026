@@ -17,10 +17,15 @@ window.gameId = "DJ"; //"VIBE"; //"DJ"; //"TAP";
 // передается ниже в конфигурацию, сама на приложение не влияет
 window.userAuthorized = true; //true; false;
 
+// Указать, был ли зарегистрирован код или нет
+// Просто переменная - используется внутри этого файла для удобства,
+// передается ниже в конфигурацию, сама на приложение не влияет
+window.codeRegistered = true; //true; false;
+
 // Указать, закончилась ли акция или нет
 // Просто переменная - используется внутри этого файла для удобства,
 // передается ниже в конфигурацию, сама на приложение не влияет
-window.activityIsOver = true; //true; false;
+window.activityIsOver = false; //true; false;
 
 // Также функция для использования внутри этого файла, заглушка
 // Имитирует закрытие попапа с игрой
@@ -156,6 +161,8 @@ function onAppReadyHandler(app) {
     switchToMobileWidth: 720,
     // Указать, авторизован пользователь или нет
     userNotAuthorized: !window.userAuthorized,
+    // Указать, Зарегистрирован код или нет
+    codeNotRegistered: !window.codeRegistered,
     // Указать, действует ли еще акция или нет
     activityIsOver: window.activityIsOver,
     gameStartHandler: window.onGameStart,

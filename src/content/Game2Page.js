@@ -25,6 +25,7 @@ class Game2Page extends GamePage {
       sequenceShow: {},
       sequenceSelect: {},
       sequenceCounter: -1,
+      roundStats: [],
     };
 
     this.object_downHandler = this.object_downHandler.bind(this);
@@ -64,6 +65,7 @@ class Game2Page extends GamePage {
       sequenceShow: {},
       sequenceSelect: {},
       sequenceCounter: -1,
+      roundStats: [],
     });
   }
 
@@ -79,8 +81,9 @@ class Game2Page extends GamePage {
     let round = this.state.round;
     let sequenceSelect = this.state.sequenceSelect;
     let score = this.state.score;
+    let roundStats = this.state.roundStats;
 
-    console.log(stage, stageCounter, sequenceCounter);
+    // console.log(stage, stageCounter, roundStats);
 
     if (stage === "init") {
       stageCounter++;
@@ -134,11 +137,6 @@ class Game2Page extends GamePage {
         stageCounter = 0;
         restartHint = true;
 
-        if (round >= this.state.game2.roundCount - 1) {
-          score = this.state.game2.gameDuration - this.state.countdown;
-          if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
-          this.countdownTimer = null;
-        }
         stage = "correct";
         for (let i = 0; i < this.state.game2.sequenceLength; i++) {
           let selectedCard = this.state.sequenceSelect[sequence[i].id];
@@ -147,6 +145,28 @@ class Game2Page extends GamePage {
             stage = "error";
             break;
           }
+        }
+
+        if (stage === "correct") {
+          roundStats.push(true);
+          if (round >= this.state.game2.roundCount - 1) {
+            let boost = 1;
+            for (let i = 0; i < roundStats.length; i++) {
+              if (roundStats[i]) boost++;
+              else break;
+            }
+            console.log(
+              boost,
+              this.state.game2.gameDuration - this.state.countdown,
+            );
+
+            score =
+              (this.state.game2.gameDuration - this.state.countdown) * boost;
+            if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
+            this.countdownTimer = null;
+          }
+        } else {
+          roundStats.push(false);
         }
       }
     } else if (stage === "correct") {
@@ -157,8 +177,10 @@ class Game2Page extends GamePage {
         progress = 0;
         if (round >= this.state.game2.roundCount) {
           stage = "close";
-          this.stopGame();
-          this.finishGame();
+          setTimeout(() => {
+            this.stopGame();
+            this.finishGame();
+          }, 2);
         } else {
           stageCounter = 0;
           restartHint = true;
@@ -186,6 +208,7 @@ class Game2Page extends GamePage {
       progress,
       sequenceSelect,
       score,
+      roundStats,
     });
     return true;
   }
@@ -231,14 +254,20 @@ class Game2Page extends GamePage {
           <div
             key={"p" + j}
             className="card-particle"
-            style={{ "--rr": j * 8 + "deg" }}
+            style={{
+              "--rr": j * 8 + "deg",
+              animationIterationCount:
+                this.state.stage === "correct" &&
+                this.state.sequenceSelect[card.id]
+                  ? "infinite"
+                  : "1",
+            }}
           ></div>,
         );
       }
       cards.push(
         <div
-          className={"gameCard"}
-          id={card.i}
+          className={"gameCardContainer"}
           key={card.id}
           style={{
             opacity:
@@ -252,14 +281,28 @@ class Game2Page extends GamePage {
             top:
               card.y *
               (this.state.game2.cardBounds.h + this.state.game2.cardGap),
-            backgroundImage: `url(${card.src})`,
-            cursor: this.state.stage === "repeat" ? "pointer" : "default",
-            pointerEvents: this.state.stage === "repeat" ? "all" : "none",
           }}
-          onClick={this.object_downHandler}
         >
+          <div
+            className={
+              "gameCard" +
+              (this.state.stage === "correct" &&
+              this.state.sequenceSelect[card.id]
+                ? " celebration"
+                : "")
+            }
+            id={card.i}
+            onClick={this.object_downHandler}
+            style={{
+              backgroundImage: `url(${card.src})`,
+              cursor: this.state.stage === "repeat" ? "pointer" : "default",
+              pointerEvents: this.state.stage === "repeat" ? "all" : "none",
+            }}
+          ></div>
           {(this.state.sequenceShow[card.id] ||
-            this.state.sequenceSelect[card.id]) && (
+            this.state.sequenceSelect[card.id] ||
+            (this.state.stage === "correct" &&
+              this.state.sequenceSelect[card.id])) && (
             <div
               className="card-particles-container"
               style={{
@@ -361,7 +404,7 @@ class Game2Page extends GamePage {
               )}
               {this.state.stage === "correct" && (
                 <div className="gameHint show-gameHint green">
-                  <p>Правильно!</p>
+                  <p className="celebration">Правильно!</p>
                 </div>
               )}
               {this.state.stage === "error" && (

@@ -224,6 +224,10 @@
   text-transform: uppercase;
 }
 
+.game .rare {
+  line-height: 120% !important;
+}
+
 .tapCounterIndicatorValue {
   font-family: "Dela Gothic One";
   font-optical-sizing: auto;

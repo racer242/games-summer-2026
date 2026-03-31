@@ -230,6 +230,12 @@
   top: 70px;
 }
 
+.gameCardContainer {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+}
+
 .gameCard {
   position: absolute;
   width: 70px;
@@ -239,4 +245,19 @@
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.celebration {
+  animation: celebration 200ms infinite;
+}
+@keyframes celebration {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

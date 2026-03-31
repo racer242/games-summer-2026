@@ -57,6 +57,9 @@ class ScoresPage extends Component {
       ? this.state.gameScores.rating
       : [];
 
+    let codeNotRegistered =
+      this.state.gameScores?.codeNotRegistered || this.state.codeNotRegistered;
+
     let rows = [];
     let after = false;
     for (let i = 0; i < rating.length; i++) {
@@ -84,35 +87,49 @@ class ScoresPage extends Component {
           <h2 className="caps">Участие в розыгрышах</h2>
         </div>
         <div className="scores-layout">
-          {!this.state.userNotAuthorized && !this.state.activityIsOver && (
-            <div className="scores-info with-plate appear-top">
-              <div className="scores-info-plate">
-                <p className="small">У тебя</p>
-                <div className="scores-values">
-                  <h2 className="yellow small">
-                    {marks} {getScoreTitleInGenitive(marks)} и
-                  </h2>
-                  <h2 className="pink small">{place}-е место</h2>
+          {!codeNotRegistered &&
+            !this.state.userNotAuthorized &&
+            !this.state.activityIsOver && (
+              <div className="scores-info with-plate appear-top">
+                <div className="scores-info-plate">
+                  <p className="small">У тебя</p>
+                  <div className="scores-values">
+                    <h2 className="yellow small">
+                      {marks} {getScoreTitleInGenitive(marks)} и
+                    </h2>
+                    <h2 className="pink small">{place}-е место</h2>
+                  </div>
+                  <p className="small">в рейтинге текущей недели</p>
                 </div>
-                <p className="small">в рейтинге текущей недели</p>
+                <p className="scores-info-comment small">
+                  Чтобы участвовать в розыгрыше, нужно войти в Топ-500 по очкам
+                  на неделе, сответствующей розыгрышу.
+                </p>
               </div>
-              <p className="scores-info-comment small">
-                Чтобы участвовать в розыгрыше, нужно войти в Топ-500 по очкам на
-                неделе, сответствующей розыгрышу.
+            )}
+          {!codeNotRegistered && (
+            <div className="scores-info with-table appear-top delay500ms">
+              <h3 className="small caps">Статусы по неделям</h3>
+              <div className="scores-table">
+                <ul className="scores-head white">
+                  <li>Розыгрыш</li>
+                  <li>Место</li>
+                  <li>Участие</li>
+                </ul>
+                <div className="scores-body black">{rows}</div>
+              </div>
+            </div>
+          )}
+
+          {codeNotRegistered && (
+            <div className="scores-info with-info appear-top">
+              <h2 className="caps rare">Ты пока не в рейтинге</h2>
+              <p>
+                Участие в рейтинге возможно только при условии регистрации хотя
+                бы одного кода
               </p>
             </div>
           )}
-          <div className="scores-info with-table appear-top delay500ms">
-            <h3 className="small caps">Статусы по неделям</h3>
-            <div className="scores-table">
-              <ul className="scores-head white">
-                <li>Розыгрыш</li>
-                <li>Место</li>
-                <li>Участие</li>
-              </ul>
-              <div className="scores-body black">{rows}</div>
-            </div>
-          </div>
         </div>
         <div className="button-group appear-bottom">
           <div

@@ -37,8 +37,8 @@ const Game2Settings = {
   cardBounds: { w: 70, h: 70 },
   cardGap: 21.5,
 
-  sequenceLength: 2,
-  roundCount: 2,
+  sequenceLength: 5,
+  roundCount: 3,
 
   cardParticlesCount: 20,
 };

@@ -71,10 +71,10 @@ class Main2Page extends Component {
             и набирай очки.
           </h3>
           <p>
-            Повтори все последовательности из 6-ти загорающихся кнопок как можно
-            быстрее, сколько секунд останется из {this.state.game3.gameDuration}{" "}
-            - столько получишь очков. Время игры –{" "}
-            {this.state.game3.gameDuration} секунд.
+            Повтори все последовательности из {this.state.game2.sequenceLength}{" "}
+            загорающихся кнопок как можно быстрее, сколько секунд останется из{" "}
+            {this.state.game2.gameDuration} - столько получишь очков. Время игры
+            – {this.state.game2.gameDuration} секунд.
           </p>
         </div>
         <div

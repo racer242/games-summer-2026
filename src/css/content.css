@@ -370,6 +370,21 @@
   padding-bottom: 0px;
 }
 
+.with-info {
+  width: 100%;
+  min-height: 330px;
+  background-color: #8200cc;
+  padding: 8px 200px;
+  border-radius: 24px;
+}
+
+.mobile .with-info {
+  min-height: 250px;
+  padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .scores-info-plate {
   display: flex;
   width: 282px;
