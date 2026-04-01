@@ -121,7 +121,7 @@ const Game3Settings = {
   objectLife: 30,
 
   tapBonusCount: 20,
-  noteCreateCount: 5,
+  noteCreateCount: 3,
   stripeAddCount: 15,
   objectCreateCount: 20,
 

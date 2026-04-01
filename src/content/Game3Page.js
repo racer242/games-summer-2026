@@ -149,13 +149,17 @@ class Game3Page extends GamePage {
   }
 
   can_clickHandler(event) {
-    let isObject = event.currentTarget?.id?.indexOf("obj") >= 0;
+    let objId = event.currentTarget?.id;
+    let isObject = objId?.indexOf("obj") >= 0;
+
+    let objs = this.state.objects.filter((v) => v.id === objId);
+    let obj = objs?.length ? objs[0] : null;
 
     let parentNode = event.currentTarget.parentNode;
     let clientX = event.clientX;
     let clientY = event.clientY;
     if (!this.tapThrottling) {
-      this.doClick(parentNode, clientX, clientY, isObject);
+      this.doClick(parentNode, clientX, clientY, isObject, obj);
       this.tapThrottling = true;
       clearTimeout(this.tapTimeout);
     }
@@ -164,7 +168,7 @@ class Game3Page extends GamePage {
     }, this.state.game3.tapThrottlingDelay);
   }
 
-  doClick(parentNode, clientX, clientY, isObject) {
+  doClick(parentNode, clientX, clientY, isObject, obj) {
     if (this.state.finished) return;
     let taps = this.state.taps;
     let notes = this.state.notes;
@@ -210,6 +214,7 @@ class Game3Page extends GamePage {
       });
       score += this.state.game3.objectBonusValue;
       scoreAdded = true;
+      obj.status = "obj-destroy";
     }
 
     taps.push({
@@ -356,6 +361,8 @@ class Game3Page extends GamePage {
           id={obj.id}
           className="object"
           style={{
+            pointerEvents: obj.status === "obj-show" ? "all" : "none",
+            cursor: obj.status === "obj-show" ? "pointer" : "default",
             left: obj.cssX,
             top: obj.cssY,
             width: obj.w,

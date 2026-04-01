@@ -26,6 +26,7 @@ class Game2Page extends GamePage {
       sequenceSelect: {},
       sequenceCounter: -1,
       roundStats: [],
+      hintStatus: "start",
     };
 
     this.object_downHandler = this.object_downHandler.bind(this);
@@ -66,6 +67,7 @@ class Game2Page extends GamePage {
       sequenceSelect: {},
       sequenceCounter: -1,
       roundStats: [],
+      hintStatus: "start",
     });
   }
 
@@ -82,6 +84,7 @@ class Game2Page extends GamePage {
     let sequenceSelect = this.state.sequenceSelect;
     let score = this.state.score;
     let roundStats = this.state.roundStats;
+    let hintStatus = this.state.hintStatus;
 
     // console.log(stage, stageCounter, roundStats);
 
@@ -95,6 +98,7 @@ class Game2Page extends GamePage {
         sequenceCounter = -1;
         sequenceSelect = {};
         stage = "start";
+        hintStatus = "start";
         restartHint = true;
         stageCounter = 0;
         startCountdown = this.state.game2.startCountdownCount;
@@ -182,16 +186,29 @@ class Game2Page extends GamePage {
             this.finishGame();
           }, 2);
         } else {
-          stageCounter = 0;
+          stage = "remember";
+          sequence = [...this.state.matrix].sort(() => Math.random() - 0.5);
+          sequenceShow = {};
+          progress = 0;
+          sequenceCounter = -1;
+          sequenceSelect = {};
           restartHint = true;
-          stage = "init";
+          stageCounter = 0;
+          hintStatus = "next";
         }
       }
     } else if (stage === "error") {
       stageCounter++;
       restartHint = false;
       if (stageCounter > this.state.game2.finalCount) {
-        stage = "init";
+        stage = "remember";
+        hintStatus = "error";
+        sequenceShow = {};
+        progress = 0;
+        sequenceCounter = -1;
+        sequenceSelect = {};
+        restartHint = true;
+        stageCounter = 0;
       }
     }
 
@@ -209,6 +226,7 @@ class Game2Page extends GamePage {
       sequenceSelect,
       score,
       roundStats,
+      hintStatus,
     });
     return true;
   }
@@ -392,9 +410,9 @@ class Game2Page extends GamePage {
               )}
               {this.state.stage === "remember" && (
                 <div className="gameHint show-gameHint orange">
-                  {this.state.round % 3 === 0 && <p>Запоминай</p>}
-                  {this.state.round % 3 === 1 && <p>Смотрим снова</p>}
-                  {this.state.round % 3 === 2 && <p>Новая партия</p>}
+                  {this.state.hintStatus === "start" && <p>Запоминай</p>}
+                  {this.state.hintStatus === "error" && <p>Смотрим снова</p>}
+                  {this.state.hintStatus === "next" && <p>Новая партия</p>}
                 </div>
               )}
               {this.state.stage === "repeat" && (

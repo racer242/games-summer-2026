@@ -10,9 +10,9 @@ const Game2Settings = {
   startCountdownCount: 3,
   initStageCount: 2,
   countdownStepCount: 7,
-  rememberStepCount: 7,
-  resultCount: 3,
-  finalCount: 20,
+  rememberStepCount: 4,
+  resultCount: 2,
+  finalCount: 12,
 
   cardSources: [
     require("../images/game2/cards/card1.png"),
