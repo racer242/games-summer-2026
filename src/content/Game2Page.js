@@ -159,11 +159,6 @@ class Game2Page extends GamePage {
               if (roundStats[i]) boost++;
               else break;
             }
-            console.log(
-              boost,
-              this.state.game2.gameDuration - this.state.countdown,
-            );
-
             score =
               (this.state.game2.gameDuration - this.state.countdown) * boost;
             if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
@@ -293,6 +288,7 @@ class Game2Page extends GamePage {
               this.state.sequenceSelect[card.id]
                 ? 1
                 : 0,
+
             left:
               card.x *
               (this.state.game2.cardBounds.w + this.state.game2.cardGap),
@@ -313,8 +309,20 @@ class Game2Page extends GamePage {
             onClick={this.object_downHandler}
             style={{
               backgroundImage: `url(${card.src})`,
-              cursor: this.state.stage === "repeat" ? "pointer" : "default",
-              pointerEvents: this.state.stage === "repeat" ? "all" : "none",
+              cursor:
+                !(
+                  this.state.sequenceShow[card.id] ||
+                  this.state.sequenceSelect[card.id]
+                ) && this.state.stage === "repeat"
+                  ? "pointer"
+                  : "default",
+              pointerEvents:
+                !(
+                  this.state.sequenceShow[card.id] ||
+                  this.state.sequenceSelect[card.id]
+                ) && this.state.stage === "repeat"
+                  ? "all"
+                  : "none",
             }}
           ></div>
           {(this.state.sequenceShow[card.id] ||

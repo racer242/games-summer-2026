@@ -20,6 +20,7 @@ const initApp = () => {
   rootElement.innerHTML = "";
 
   const root = ReactDOM.createRoot(rootElement);
+
   root.render(
     <React.StrictMode>
       <App

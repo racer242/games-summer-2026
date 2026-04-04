@@ -17,7 +17,11 @@ class PageStack extends Component {
       this.state = {
         ...this.store.getState(),
       };
-    } else this.state = { currentPage: "main" };
+    }
+    this.state = {
+      ...this.store.getState(),
+      currentPage: "main",
+    };
   }
 
   componentDidMount() {

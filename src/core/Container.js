@@ -83,7 +83,7 @@ class Container extends Component {
 
     let pageScale = Math.min(
       width / pageBounds.width,
-      height / pageBounds.height
+      height / pageBounds.height,
     );
     let pageX = (width - pageBounds.width) / 2 / pageScale;
     let pageY = (height - pageBounds.height) / 2 / pageScale;
@@ -106,34 +106,39 @@ class Container extends Component {
 
   render() {
     let b = this.updateBounds(this.props.windowWidth, this.props.windowHeight);
-    let children = [];
-    children.push(this.props.children);
-    children.push(
-      <div
-        className={"page" + (b.mobileSize ? " mobile" : "")}
-        key="Page"
-        ref={this.ref}
-        style={{
-          width: b.pageBounds.width,
-          height: b.pageBounds.height,
-          transform: `scale(${b.pageScale}) translateX(${b.pageX}px) translateY(${b.pageY}px)`,
-        }}
-      >
-        <PageStack bounds={b} store={this.store} />
-        {!this.state.preloaded && (
-          <Preloader store={this.store} key="Preloader" />
-        )}
+    // let children = [];
+    // children.push(this.props.children);
+    // children.push(
+    return (
+      <div className="Container">
+        {this.props.children}
+        <div
+          className={"page" + (b.mobileSize ? " mobile" : "")}
+          key="Page"
+          ref={this.ref}
+          style={{
+            width: b.pageBounds.width,
+            height: b.pageBounds.height,
+            transform: `scale(${b.pageScale}) translateX(${b.pageX}px) translateY(${b.pageY}px)`,
+          }}
+        >
+          <PageStack bounds={b} store={this.store} />
+          {!this.state.preloaded && (
+            <Preloader store={this.store} key="Preloader" />
+          )}
 
-        {this.state.aboutPopup && (
-          <AboutPopup
-            key="AboutPopup"
-            onClose={this.closeAboutPopup_clickHandler}
-          />
-        )}
+          {this.state.aboutPopup && (
+            <AboutPopup
+              key="AboutPopup"
+              onClose={this.closeAboutPopup_clickHandler}
+            />
+          )}
+        </div>
       </div>
     );
+    // );
 
-    return React.createElement("div", { id: "Container" }, children);
+    // return React.createElement("div", { id: "Container" }, children);
   }
 }
 

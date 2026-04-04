@@ -26,8 +26,20 @@ class GamePage extends Component {
     this.counter = 0;
     if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
     if (this.gameTimer != null) clearTimeout(this.gameTimer);
+    if (this.startTimer != null) clearTimeout(this.startTimer);
     if (this.stopTimer != null) clearTimeout(this.stopTimer);
     this.countdown = 0;
+  }
+
+  destroy() {
+    if (this.countdownTimer != null) clearTimeout(this.countdownTimer);
+    if (this.gameTimer != null) clearTimeout(this.gameTimer);
+    if (this.startTimer != null) clearTimeout(this.startTimer);
+    if (this.stopTimer != null) clearTimeout(this.stopTimer);
+    this.countdownTimer = null;
+    this.gameTimer = null;
+    this.stopTimer = null;
+    this.started = false;
   }
 
   componentDidMount() {
@@ -35,7 +47,9 @@ class GamePage extends Component {
       this.onStoreChange();
     });
     this.mounted = true;
-    this.startGame();
+
+    if (this.startTimer != null) clearTimeout(this.startTimer);
+    this.startTimer = setTimeout(this.startGame.bind(this), 500);
   }
 
   componentWillUnmount() {
@@ -43,6 +57,8 @@ class GamePage extends Component {
       this.unsubscribe();
     }
     this.mounted = false;
+
+    this.destroy();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {}
@@ -121,22 +137,16 @@ class GamePage extends Component {
   stepGame() {
     if (this.doGame()) {
       if (this.gameTimer != null) clearTimeout(this.gameTimer);
-      // if (this.initCount > 1) {
       this.gameTimer = setTimeout(
         this.stepGame.bind(this),
         this.state.stepDuration,
       );
-      // } else {
-      //   this.initCount++;
-      //   this.gameTimer = setTimeout(
-      //     this.stepGame.bind(this),
-      //     this.state.stepDuration
-      //   );
-      // }
     }
   }
 
   stopGame() {
+    console.log("stopGame", this.countdownTimer, this.gameTimer);
+
     if (this.gameTimer != null) clearTimeout(this.gameTimer);
     this.gameTimer = null;
     if (this.countdownTimer != null) clearTimeout(this.countdownTimer);

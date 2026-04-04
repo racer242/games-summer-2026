@@ -79,7 +79,7 @@ class DataManager extends Component {
       action.data,
       {},
       "requestCheck",
-      "gameCredentials"
+      "gameCredentials",
     );
   }
 
@@ -90,7 +90,7 @@ class DataManager extends Component {
       {},
       "requestStart",
       "gameCredentials",
-      action.additionalData
+      action.additionalData,
     );
   }
 
@@ -101,7 +101,7 @@ class DataManager extends Component {
       {},
       "requestFinish",
       "gameScores",
-      action.additionalData
+      action.additionalData,
     );
   }
 
@@ -140,7 +140,7 @@ class DataManager extends Component {
           showError: true,
           errorText: LOAD_ERROR,
           [processId]: false,
-        })
+        }),
       );
       this.isLoading = false;
       return;
@@ -162,7 +162,7 @@ class DataManager extends Component {
             [dataId]: response.data.data,
             [processId]: false,
             ...additionalData,
-          })
+          }),
         );
       } else {
         console.log("Error", response.data.errorText);
@@ -171,7 +171,7 @@ class DataManager extends Component {
             showError: true,
             errorText: response.data.errorText,
             [processId]: false,
-          })
+          }),
         );
       }
     } else {
