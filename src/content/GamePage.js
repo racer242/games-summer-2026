@@ -49,7 +49,7 @@ class GamePage extends Component {
     this.mounted = true;
 
     if (this.startTimer != null) clearTimeout(this.startTimer);
-    this.startTimer = setTimeout(this.startGame.bind(this), 500);
+    this.startTimer = setTimeout(this.startGame.bind(this), 100);
   }
 
   componentWillUnmount() {
@@ -121,9 +121,9 @@ class GamePage extends Component {
         ...this.state,
         finished: false,
       });
-      this.stepGame();
-      this.controlGame();
-      this.doStart();
+      setTimeout(() => this.doStart(), 1);
+      setTimeout(() => this.stepGame(), 10);
+      setTimeout(() => this.controlGame(), 20);
     }
   }
 

@@ -23,7 +23,7 @@ class Game3Page extends GamePage {
       notes: [],
       bonuses: [],
       taps: [],
-      canId: 0,
+      canId: -1,
       tapCounter: 0,
       stripesAmount: 0,
       stripes: [],
