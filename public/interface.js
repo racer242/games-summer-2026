@@ -158,7 +158,7 @@ function onAppReadyHandler(app) {
     // Обработчик попытки игры без подтверждения
     playWithoutConfirmation: window.playWithoutConfirmation,
     // Значение ширины окна, при котором происходит переключение на мобильную версию
-    switchToMobileWidth: 720,
+    // switchToMobileWidth: 448,
     // Указать, авторизован пользователь или нет
     userNotAuthorized: !window.userAuthorized,
     // Указать, Зарегистрирован код или нет

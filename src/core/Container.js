@@ -72,7 +72,16 @@ class Container extends Component {
     // this.lastWidth = width;
     // this.lastHeight = height;
 
-    if (width > this.state.switchToMobileWidth) {
+    // if (width > this.state.switchToMobileWidth) {
+    //   pageBounds.width = this.state.desktopBounds.width;
+    //   pageBounds.height = this.state.desktopBounds.height;
+    // } else {
+    //   pageBounds.width = this.state.mobileBounds.width;
+    //   pageBounds.height = this.state.mobileBounds.height;
+    //   mobileSize = true;
+    // }
+
+    if (width > height) {
       pageBounds.width = this.state.desktopBounds.width;
       pageBounds.height = this.state.desktopBounds.height;
     } else {

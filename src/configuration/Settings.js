@@ -15,7 +15,7 @@ const settings = {
     width: 320,
     height: 508,
   },
-  switchToMobileWidth: 448,
+  // switchToMobileWidth: 448,
   currentPage: "main",
 };
 
